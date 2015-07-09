@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.Processor;
+import judge.Info;
 
 import java.net.Socket;
 import java.io.*;
@@ -11,17 +12,17 @@ import java.io.*;
 public class Data extends Transferable  implements Serializable  {
 
     // TODO: Match storedData with map info
-    Object StoredData = null ;
+    Info StoredData = null ;
 
     public Data(Socket socket, Processor processor) {
         super(socket,processor);
     }
 
-    public Object getStoredData() {
+    public Info getStoredData() {
         return StoredData;
     }
 
-    public void setStoredData(Object storedData) {
+    public void setStoredData(Info storedData) {
         StoredData = storedData;
     }
 
@@ -30,7 +31,7 @@ public class Data extends Transferable  implements Serializable  {
         ObjectInputStream input = null ;
         try {
             input = new ObjectInputStream(socket.getInputStream());
-            StoredData = input.readObject();
+            StoredData = (Info)input.readObject();
             input.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

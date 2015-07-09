@@ -1,5 +1,11 @@
 package Controller;
 
+import Model.Data;
+import judge.Info;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Lenovo on 7/5/2015.
  */
@@ -22,10 +28,24 @@ public class KnockKnockProtocol {
                     }
                     return portNumber;
                 }
+                if (inputLine.contains("PASSWORD KICK")){
+                    inputLine = inputLine.substring(14);
+                    HashMap hashMap = ((KKMultiServer)(serverThread.getGate().getProcessor())).getThreadHashMap();
+                    if (hashMap.containsKey(inputLine) && serverThread.getGate().getInfo().isAdmin()){
+                        hashMap.remove(inputLine);
+                    }
+                }
                 break;
             case "MAIN":
-                serverThread.getGate().setSendingDestination(inputLine);
-                serverThread.getGate().SendMultimedia(serverThread.getGate().getHostName(),serverThread.getGate().getMultimedia_SEND_PORT_NUMBER());
+                if (inputLine.equals("PAUSE")){
+                    ArrayList<Info> infos = ((KKMultiServer)serverThread.getGate().getProcessor()).getDataArray();
+                    Info lastInfo = infos.get(infos.size()-1);
+                    lastInfo.setRunning(false);
+                    serverThread.getGate().setInfo(lastInfo);
+                }
+                Gate gate = serverThread.getGate();
+                gate.setSendingDestination(inputLine);
+                gate.SendMultimedia(gate.getHostName(), gate.getMultimedia_SEND_PORT_NUMBER());
                 break;
             default:
                 break;

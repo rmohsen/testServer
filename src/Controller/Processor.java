@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Data;
+
 import java.util.ArrayList;
 
 /**
@@ -16,5 +18,14 @@ public abstract class Processor implements Runnable {
 
     protected ArrayList<String> chatArray = new ArrayList<>();
 
+    public ArrayList<String> getUserArray() {
+        return userArray;
+    }
+
+    public void setUserArray(ArrayList<String> userArray) {
+        this.userArray = userArray;
+    }
+
+    private ArrayList<String> userArray = new ArrayList<>();
 
 }

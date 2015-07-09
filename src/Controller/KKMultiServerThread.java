@@ -21,7 +21,6 @@ public class KKMultiServerThread extends Thread {
         this.processor = processor;
     }
 
-
     public void run() {
         try {
             String inputLine;
@@ -36,6 +35,7 @@ public class KKMultiServerThread extends Thread {
             outputLines = kkp.processInput(inputLine,"PRIMARY",this);
             gate.initializePortsNumber(outputLines);
             gate.openAllGates();
+            processor.getUserArray().add(gate.getInfo().getUserName());
 
             for (int i = 0; i < 7; i++) {
                 // TODO: appropriate out

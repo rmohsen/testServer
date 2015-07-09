@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import judge.Info;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.Scanner;
  * Created by Lenovo on 7/8/2015.
  */
 public class Gate {
-    private  Object info;
+    private Info info;
     private String comment;
     private String sendingDestination;
     private String receivingDestination;
@@ -46,11 +47,11 @@ public class Gate {
     int Multimedia_RECEIVE_PORT_NUMBER ;
 
 
-    public Object getInfo() {
+    public Info getInfo() {
         return info;
     }
 
-    public void setInfo(Object info) {
+    public void setInfo(Info info) {
         this.info = info;
     }
 
