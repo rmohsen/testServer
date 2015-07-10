@@ -1,16 +1,13 @@
-package Model;
+package Server.Model;
 
-import Controller.Processor;
-
+import Server.Model.Transferable;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Created by Lenovo on 7/7/2015.
  */
 public class Multimedia extends Transferable {
-
 
     public Multimedia(Socket socket, Processor processor) {
         super(socket,processor);

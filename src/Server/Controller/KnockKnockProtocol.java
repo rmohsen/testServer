@@ -1,6 +1,6 @@
-package Controller;
+package Server.Controller;
 
-import Model.Data;
+import Server.Model.Data;
 import judge.Info;
 
 import java.util.ArrayList;

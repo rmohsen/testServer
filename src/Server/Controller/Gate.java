@@ -1,6 +1,6 @@
-package Controller;
+package Server.Controller;
 
-import Model.*;
+import Server.Model.*;
 import judge.Info;
 
 import java.io.BufferedReader;

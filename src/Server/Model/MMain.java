@@ -1,6 +1,6 @@
-package Model;
+package Server.Model;
 
-import Controller.Processor;
+import Server.Controller.Processor;
 
 import java.io.IOException;
 import java.io.InputStream;

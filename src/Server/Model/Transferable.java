@@ -1,6 +1,4 @@
-package Model;
-
-import Controller.Processor;
+package Server.Model;
 
 import java.net.Socket;
 
@@ -9,14 +7,14 @@ import java.net.Socket;
  */
 public abstract class Transferable {
 
-    protected Processor processor;
+    public Processor processor;
 
     public Transferable(Socket socket, Processor processor){
         this.socket = socket ;
         this.processor = processor;
     }
 
-    protected Socket socket ;
+    public Socket socket ;
 
     public abstract void sender();
 

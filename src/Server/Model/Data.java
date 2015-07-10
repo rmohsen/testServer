@@ -1,15 +1,20 @@
-package Model;
+package Server.Model;
 
-import Controller.Processor;
+import Server.Model.*;
+import Server.Controller.*;
+
 import judge.Info;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
-import java.io.*;
 
 /**
  * Created by Lenovo on 7/7/2015.
  */
-public class Data extends Transferable  implements Serializable  {
+public class Data extends Transferable implements Serializable  {
 
     // TODO: Match storedData with map info
     Info StoredData = null ;

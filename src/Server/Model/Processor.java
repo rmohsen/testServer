@@ -1,6 +1,5 @@
-package Controller;
+package Server.Model;
 
-import Model.Data;
 
 import java.util.ArrayList;
 

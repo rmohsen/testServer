@@ -1,7 +1,10 @@
-package judge;
+package bozorg.judge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import bozorg.common.GameObjectID;
+import bozorg.common.exceptions.BozorgExceptionBase;
 
 public abstract class JudgeAbstract {
 	// cells type
@@ -75,11 +78,11 @@ public abstract class JudgeAbstract {
 
 	public abstract int getMapCellType(int col, int row);
 
-	public abstract int getMapCellType(int col, int row, GameObjectID player) throws BozorgExceptionBase;
+	public abstract int getMapCellType(int col, int row, GameObjectID player);
 
 	public abstract int getMapWallType(int col, int row);
 	
-	public abstract int getMapWallType(int col, int row ,GameObjectID player) throws BozorgExceptionBase;
+	public abstract int getMapWallType(int col, int row ,GameObjectID player);
 
 	public abstract void setup();
 
@@ -111,7 +114,7 @@ public abstract class JudgeAbstract {
 			throws BozorgExceptionBase;
 
 	public abstract ArrayList<GameObjectID> getPlayersInVision(
-			GameObjectID player) throws BozorgExceptionBase;
+			GameObjectID player);
 
 	public abstract ArrayList<GameObjectID> getFans(GameObjectID player)
 			throws BozorgExceptionBase;

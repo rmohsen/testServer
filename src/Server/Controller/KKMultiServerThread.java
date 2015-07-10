@@ -1,4 +1,4 @@
-package Controller;
+package Server.Controller;
 
 import java.net.*;
 import java.io.*;
@@ -16,7 +16,7 @@ public class KKMultiServerThread extends Thread {
     Gate gate = new Gate(KKMultiServer.PRIMARY_PORT_NUMBER,processor);
 
     public KKMultiServerThread(Socket socket,Processor processor) {
-        super("Controller.KKMultiServerThread");
+        super("Server.Controller.KKMultiServerThread");
         this.socket = socket;
         this.processor = processor;
     }

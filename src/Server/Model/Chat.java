@@ -1,11 +1,10 @@
-package Model;
+package Server.Model;
 
-import Controller.Processor;
+import Server.Controller.Processor;
 
 import java.io.*;
 
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
