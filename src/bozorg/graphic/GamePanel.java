@@ -98,7 +98,7 @@ public class GamePanel extends JPanel {
 		String strs[] = { "Up", "Down", "Right", "Left" };
 		for (int i = 0; i < 4; i++) {
 			attackBtn[i] = new JButton(strs[i]);
-			attackBtn[i].addActionListener(new dirActionListener(dirs[i],
+			attackBtn[i].addActionListener(new bozorg.graphic.dirActionListener(dirs[i],
 					this.judge, curPlayer));
 			attackBtn[i].setBounds(MyFrame.WIDTH - 120, 70 + 50 * i, 100, 30);
 			add(attackBtn[i]);

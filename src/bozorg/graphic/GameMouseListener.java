@@ -1,9 +1,9 @@
-package Graphic;
+package bozorg.graphic;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class SetPlayersMouseListener implements MouseListener{
+public class GameMouseListener implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {

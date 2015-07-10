@@ -1,12 +1,16 @@
-package Graphic;
+package bozorg.graphic;
 
-import Logic.JudgeAbstract;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import bozorg.judge.JudgeAbstract;
 
 public class MyFrame extends JFrame {
-	public static MyFrame frame;
+	public static bozorg.graphic.MyFrame frame;
 	public static int WIDTH = 800;
 	public static int HEIGHT = 800;
 	public static int ROW;

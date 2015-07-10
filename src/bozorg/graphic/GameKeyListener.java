@@ -1,13 +1,13 @@
-package Graphic;
-
-import Logic.BozorgExceptionBase;
-import Logic.GameObjectID;
-import Logic.Judge;
-import Logic.JudgeAbstract;
+package bozorg.graphic;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+
+import bozorg.common.GameObjectID;
+import bozorg.common.exceptions.BozorgExceptionBase;
+import bozorg.judge.Judge;
+import bozorg.judge.JudgeAbstract;
 
 public class GameKeyListener implements KeyListener {
 	public GameObjectID curPlayer;
