@@ -1,5 +1,7 @@
 package Logic;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lenovo on 7/9/2015.
  */
@@ -10,7 +12,35 @@ public class Info {
         return admin;
     }
 
-//    private GameObjectID objectID = new GameObjectID();
+    private ArrayList<GameObjectID> gameObjectIDs ;
+
+    public ArrayList<GameObjectID> getGameObjectIDs() {
+        return gameObjectIDs;
+    }
+
+    public void setGameObjectIDs(ArrayList<GameObjectID> gameObjectIDs) {
+        this.gameObjectIDs = gameObjectIDs;
+    }
+
+    public GameObjectID getObjectID() {
+        return objectID;
+    }
+
+    public void setObjectID(GameObjectID objectID) {
+        this.objectID = objectID;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    private Map map;
+
+    private GameObjectID objectID ;
 
     public void setAdmin(boolean admin) {
         this.admin = admin;

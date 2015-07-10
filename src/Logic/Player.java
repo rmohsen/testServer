@@ -3,7 +3,7 @@ package Logic;
 /**
  * Created by Lenovo on 7/10/2015.
  */
-class Player{
+public class Player{
 
     int fans;
     int speed;

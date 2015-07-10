@@ -27,4 +27,14 @@ public abstract class Processor implements Runnable {
 
     private ArrayList<String> userArray = new ArrayList<>();
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password ="1234";
+
 }

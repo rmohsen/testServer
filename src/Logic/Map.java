@@ -3,7 +3,7 @@ package Logic;
 /**
  * Created by Lenovo on 7/10/2015.
  */
-class Map{
+public class Map{
     Cell[][] map;
     int width,height;
     public Map(int[][] cellsType,int[][] wallsType,Player[] players){

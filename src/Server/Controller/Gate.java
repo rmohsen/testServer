@@ -350,8 +350,6 @@ public class Gate {
 
             //make needed sending ports
 
-            //TODO : make loop
-
             //initialize receiving port
 
             // aim port on receiving:
