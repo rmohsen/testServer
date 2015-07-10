@@ -1,6 +1,5 @@
 package Server.Model;
 
-import Server.Model.Transferable;
 import java.io.*;
 import java.net.Socket;
 
@@ -27,7 +26,7 @@ public class Multimedia extends Transferable {
     public void receiver() {
 
         final int FILE_SIZE = 6022386;
-        final int SOCKET_PORT = 13267;      // you may change this
+        final int SOCKET_PORT = socket.getPort();      // you may change this
         final String SERVER = "127.0.0.1";  // localhost
         final String FILE_TO_RECEIVED = destination;
 
@@ -76,7 +75,7 @@ public class Multimedia extends Transferable {
     @Override
     public void sender(){
 
-        final int SOCKET_PORT = 13267;  // you may change this
+        final int SOCKET_PORT = socket.getPort();  // you may change this
         final String FILE_TO_SEND = destination ;  // you may change this
 
         FileInputStream fileInputStream = null;
@@ -105,5 +104,4 @@ public class Multimedia extends Transferable {
             }
         }
     }
-
 }

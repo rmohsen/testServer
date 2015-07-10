@@ -34,11 +34,16 @@ public class KKMultiServer extends Processor {
 
     private HashMap<String,KKMultiServerThread> threadHashMap = new HashMap<>();
 
+    public String getPassword() {
+        return password;
+    }
+
+    String password = "1234";
+
     @Override
     public void run() {
         boolean listening = true;
         while (listening) {
-
             int portNumber = PRIMARY_PORT_NUMBER;
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
                 KKMultiServerThread thread = new KKMultiServerThread(serverSocket.accept(),this);

@@ -1,6 +1,5 @@
-package Server.Controller;
+package Server.Model;
 
-import Server.Model.*;
 import Logic.Info;
 
 import java.io.BufferedReader;
@@ -34,17 +33,17 @@ public class Gate {
         return hostName;
     }
 
-    final String hostName = null ;
+    final String hostName = null;
 
     Processor processor;
-    int PRIMARY_PORT_NUMBER;
-    int MAIN_PORT_NUMBER ;
-    int CHAT_SEND_PORT_NUMBER ;
-    int Data_SEND_PORT_NUMBER ;
-    int Multimedia_SEND_PORT_NUMBER ;
-    int CHAT_RECEIVE_PORT_NUMBER ;
-    int Data_RECEIVE_PORT_NUMBER ;
-    int Multimedia_RECEIVE_PORT_NUMBER ;
+    int PRIMARY_PORT_NUMBER = 0;
+    int MAIN_PORT_NUMBER = 0;
+    int CHAT_SEND_PORT_NUMBER = 0;
+    int Data_SEND_PORT_NUMBER = 0;
+    int Multimedia_SEND_PORT_NUMBER = 0;
+    int CHAT_RECEIVE_PORT_NUMBER = 0;
+    int Data_RECEIVE_PORT_NUMBER = 0;
+    int Multimedia_RECEIVE_PORT_NUMBER = 0;
 
 
     public Info getInfo() {
@@ -71,20 +70,21 @@ public class Gate {
         this.sendingDestination = sendingDestination;
     }
 
-    public  String getReceivingDestination() {
+    public String getReceivingDestination() {
         return receivingDestination;
     }
 
     public void setReceivingDestination(String receivingDestination) {
         this.receivingDestination = receivingDestination;
     }
-    private void sendingRequest(PrintWriter out){
+
+    private void sendingRequest(PrintWriter out) {
         Formatter formatter = new Formatter(out);
         formatter.format("knock knock");
         formatter.flush();
     }
 
-    public Scanner firstConnect(String hostName, int primaryPortNumber){
+    public Scanner firstConnect(String hostName, int primaryPortNumber) {
         try {
             Socket kkSocket = new Socket(hostName, primaryPortNumber);
             PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -102,27 +102,27 @@ public class Gate {
         return null;
     }
 
-    private void getPortNumber(Scanner scanner){
+    private void getPortNumber(Scanner scanner) {
         MAIN_PORT_NUMBER = scanner.nextInt();
         getReceivePortNumber(scanner);
         getSendPortNumber(scanner);
     }
 
-    private void getSendPortNumber(Scanner scanner){
+    private void getSendPortNumber(Scanner scanner) {
         CHAT_SEND_PORT_NUMBER = scanner.nextInt();
         Data_SEND_PORT_NUMBER = scanner.nextInt();
         Multimedia_SEND_PORT_NUMBER = scanner.nextInt();
     }
 
-    private void getReceivePortNumber(Scanner scanner){
+    private void getReceivePortNumber(Scanner scanner) {
         CHAT_RECEIVE_PORT_NUMBER = scanner.nextInt();
         Data_RECEIVE_PORT_NUMBER = scanner.nextInt();
         Multimedia_RECEIVE_PORT_NUMBER = scanner.nextInt();
     }
 
-    public void SendChat(String hostName,int chatSendPortNumber){
+    public void SendChat(String hostName, int chatSendPortNumber) {
         try {
-            Chat sendingChat = new Chat(new Socket(hostName, chatSendPortNumber),processor);
+            Chat sendingChat = new Chat(new Socket(hostName, chatSendPortNumber), processor);
             sendingChat.setString(comment);
             Port sendingChatPort = new Port(sendingChat);
             sendingChatPort.run();
@@ -133,9 +133,9 @@ public class Gate {
         }
     }
 
-    public void SendData(String hostName,int dataSendPortNumber){
+    public void SendData(String hostName, int dataSendPortNumber) {
         try {
-            Data sendingData = new Data(new Socket(hostName, dataSendPortNumber),processor);
+            Data sendingData = new Data(new Socket(hostName, dataSendPortNumber), processor);
             sendingData.setStoredData(info);
             Port sendingDataPort = new Port(sendingData);
             sendingDataPort.run();
@@ -146,10 +146,10 @@ public class Gate {
         }
     }
 
-    public void SendMain(String hostName,int mainSendPortNumber){
+    public void SendMain(String hostName, int mainSendPortNumber) {
 
         try {
-            MMain sendingMain = new MMain(new Socket(hostName,mainSendPortNumber),processor);
+            MMain sendingMain = new MMain(new Socket(hostName, mainSendPortNumber), processor);
             sendingMain.setCommand(command);
             Port sendingMainPort = new Port(sendingMain);
             sendingMainPort.run();
@@ -157,10 +157,11 @@ public class Gate {
             e.printStackTrace();
         }
     }
-    public void ReceiveMain(String hostName,int mainSendPortNumber){
+
+    public void ReceiveMain(String hostName, int mainSendPortNumber) {
 
         try {
-            MMain receivingMain = new MMain(new Socket(hostName,mainSendPortNumber),processor);
+            MMain receivingMain = new MMain(new Socket(hostName, mainSendPortNumber), processor);
             receivingMain.setCommand(command);
             Port sendingMainPort = new Port(receivingMain);
             sendingMainPort.run();
@@ -241,9 +242,9 @@ public class Gate {
         Multimedia_RECEIVE_PORT_NUMBER = multimedia_RECEIVE_PORT_NUMBER;
     }
 
-    public void SendMultimedia(String hostName,int MultimediaSendPortNumber){
+    public void SendMultimedia(String hostName, int MultimediaSendPortNumber) {
         try {
-            Multimedia sendingMultimedia = new Multimedia(new Socket(hostName, MultimediaSendPortNumber),processor);
+            Multimedia sendingMultimedia = new Multimedia(new Socket(hostName, MultimediaSendPortNumber), processor);
             sendingMultimedia.setDestination(sendingDestination);
             Port sendingMultimediaPort = new Port(sendingMultimedia);
             sendingMultimediaPort.run();
@@ -255,9 +256,9 @@ public class Gate {
         }
     }
 
-    public void ReceiveChat(String hostName,int chatReceivePortNumber){
+    public void ReceiveChat(String hostName, int chatReceivePortNumber) {
         try {
-            Chat receivingChat = new Chat(new Socket(hostName, chatReceivePortNumber),processor);
+            Chat receivingChat = new Chat(new Socket(hostName, chatReceivePortNumber), processor);
             Port receivingChatPort = new Port(receivingChat);
             receivingChatPort.setSending(false);
             receivingChatPort.run();
@@ -268,9 +269,9 @@ public class Gate {
         }
     }
 
-    public void ReceiveData(String hostName,int dataReceivePortNumber) {
+    public void ReceiveData(String hostName, int dataReceivePortNumber) {
         try {
-            Data receivingData = new Data(new Socket(hostName, dataReceivePortNumber),processor);
+            Data receivingData = new Data(new Socket(hostName, dataReceivePortNumber), processor);
             Port receivingDataPort = new Port(receivingData);
             receivingDataPort.setSending(false);
             receivingDataPort.run();
@@ -281,9 +282,9 @@ public class Gate {
         }
     }
 
-    public void ReceiveMultimedia(String hostName,int MultimediaReceivePortNumber){
+    public void ReceiveMultimedia(String hostName, int MultimediaReceivePortNumber) {
         try {
-            Multimedia receivingMultimedia = new Multimedia(new Socket(hostName, MultimediaReceivePortNumber),processor);
+            Multimedia receivingMultimedia = new Multimedia(new Socket(hostName, MultimediaReceivePortNumber), processor);
             Port receivingMultimediaPort = new Port(receivingMultimedia);
             receivingMultimediaPort.setSending(false);
             receivingMultimedia.setDestination(receivingDestination);
@@ -295,15 +296,15 @@ public class Gate {
         }
     }
 
-    public Gate(int primaryPortNumber,Processor processor) {
+    public Gate(int primaryPortNumber, Processor processor) {
         this.processor = processor;
         PRIMARY_PORT_NUMBER = primaryPortNumber;
     }
 
-    public void initializePortsNumber(int[] portsNumber){
+    public void initializePortsNumber(int[] portsNumber) {
         MAIN_PORT_NUMBER = portsNumber[0];
 
-        CHAT_SEND_PORT_NUMBER = portsNumber[4] ;
+        CHAT_SEND_PORT_NUMBER = portsNumber[4];
         Data_SEND_PORT_NUMBER = portsNumber[5];
         Multimedia_SEND_PORT_NUMBER = portsNumber[6];
 
@@ -312,24 +313,24 @@ public class Gate {
         Multimedia_RECEIVE_PORT_NUMBER = portsNumber[3];
     }
 
-    public void makeConnection(String hostName){
-        Scanner scanner = firstConnect(hostName,PRIMARY_PORT_NUMBER);
+    public void makeConnection(String hostName) {
+        Scanner scanner = firstConnect(hostName, PRIMARY_PORT_NUMBER);
         getPortNumber(scanner);
     }
 
-    public void openSendGate(String hostName){
-        SendChat(hostName,CHAT_SEND_PORT_NUMBER);
-        SendData(hostName,Data_SEND_PORT_NUMBER);
+    public void openSendGate(String hostName) {
+        SendChat(hostName, CHAT_SEND_PORT_NUMBER);
+        SendData(hostName, Data_SEND_PORT_NUMBER);
         SendMultimedia(hostName, Multimedia_SEND_PORT_NUMBER);
     }
 
-    public void openReceiveGate(String hostName){
+    public void openReceiveGate(String hostName) {
         ReceiveChat(hostName, CHAT_RECEIVE_PORT_NUMBER);
         ReceiveData(hostName, Data_RECEIVE_PORT_NUMBER);
         ReceiveMultimedia(hostName, Multimedia_RECEIVE_PORT_NUMBER);
     }
 
-    public void openAllGates(){
+    public void openAllGates() {
         //TODO: choose appropriate destination for HOST_NAME & NUMBER
         String fromServer;
         // make a socket to primary port
@@ -338,23 +339,23 @@ public class Gate {
 
         openReceiveGate(hostName);
         openSendGate(hostName);
-            //make sending object
+        //make sending object
 
-            //make receiving object
+        //make receiving object
 
-            //initialize sending objects
+        //initialize sending objects
 
-            //initialize receiving objects
+        //initialize receiving objects
 
-            //make needed receiving ports
+        //make needed receiving ports
 
-            //make needed sending ports
+        //make needed sending ports
 
-            //TODO : make loop
+        //TODO : make loop
 
-            //initialize receiving port
+        //initialize receiving port
 
-            // aim port on receiving:
+        // aim port on receiving:
 
     }
 }

@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.Gate;
 import Server.Model.Processor;
 
 import java.io.*;
@@ -39,19 +40,17 @@ public class KKMultiServerThread extends Thread {
             gate.openAllGates();
             processor.getUserArray().add(gate.getInfo().getUserName());
 
-            for (int i = 0; i < 7; i++) {
-                // TODO: appropriate out
-                out.println(outputLines[i]);
-            }
+            if (inputLine != null) {
 
+                for (int i = 0; i < 7; i++) {
+                    // TODO: appropriate out
+                    out.println(outputLines[i]);
+                }
+            }
             String location = null;
             // TODO: declare location
-            //write file info to disc
-            FileWriter fw = new FileWriter(KKMultiServer.class.getResource(location).toString());
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

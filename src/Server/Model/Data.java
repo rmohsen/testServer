@@ -11,13 +11,13 @@ import java.net.Socket;
 /**
  * Created by Lenovo on 7/7/2015.
  */
-public class Data extends Transferable implements Serializable  {
+public class Data extends Transferable implements Serializable {
 
     // TODO: Match storedData with map info
-    Info StoredData = null ;
+    Info StoredData = null;
 
     public Data(Socket socket, Processor processor) {
-        super(socket,processor);
+        super(socket, processor);
     }
 
     public Info getStoredData() {
@@ -29,19 +29,26 @@ public class Data extends Transferable implements Serializable  {
     }
 
     @Override
-    public void receiver(){
-        ObjectInputStream input = null ;
+    public void receiver() {
+        ObjectInputStream input = null;
         try {
             input = new ObjectInputStream(socket.getInputStream());
-            StoredData = (Info)input.readObject();
+            StoredData = (Info) input.readObject();
             input.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (socket != null) socket.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void sender(){
+    public void sender() {
         ObjectOutputStream output = null;
         try {
             output = new ObjectOutputStream(socket.getOutputStream());
@@ -49,6 +56,12 @@ public class Data extends Transferable implements Serializable  {
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (socket != null) socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

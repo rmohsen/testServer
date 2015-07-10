@@ -1,6 +1,7 @@
 package Server.Controller;
 
 import Logic.Info;
+import Server.Model.Gate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,29 +28,30 @@ public class KnockKnockProtocol {
                     }
                     return portNumber;
                 }
-                if (inputLine.contains("PASSWORD KICK")){
-                    inputLine = inputLine.substring(14);
-                    HashMap hashMap = ((KKMultiServer)(serverThread.getGate().getProcessor())).getThreadHashMap();
-                    if (hashMap.containsKey(inputLine) && serverThread.getGate().getInfo().isAdmin()){
+                break;
+            case "MAIN":
+                Gate gate = serverThread.getGate();
+                KKMultiServer server = (KKMultiServer)serverThread.getGate().getProcessor();
+                String password = server.getPassword();
+                if (inputLine.equals("PAUSE")){
+                    ArrayList<Info> infos = server.getDataArray();
+                    Info lastInfo = infos.get(infos.size()-1);
+                    lastInfo.setRunning(false);
+                    gate.setInfo(lastInfo);
+                }
+                if (inputLine.contains(password+" KICK")){
+                    inputLine = inputLine.substring(password.length()+5);
+                    HashMap hashMap = server.getThreadHashMap();
+                    if (hashMap.containsKey(inputLine) && gate.getInfo().isAdmin()){
                         hashMap.remove(inputLine);
                     }
                 }
-                break;
-            case "MAIN":
-                if (inputLine.equals("PAUSE")){
-                    ArrayList<Info> infos = ((KKMultiServer)serverThread.getGate().getProcessor()).getDataArray();
-                    Info lastInfo = infos.get(infos.size()-1);
-                    lastInfo.setRunning(false);
-                    serverThread.getGate().setInfo(lastInfo);
-                }
-                Gate gate = serverThread.getGate();
                 gate.setSendingDestination(inputLine);
                 gate.SendMultimedia(gate.getHostName(), gate.getMultimedia_SEND_PORT_NUMBER());
                 break;
             default:
                 break;
         }
-
         return null;
     }
 }

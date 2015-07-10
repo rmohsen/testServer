@@ -37,6 +37,13 @@ public class Chat extends Transferable {
             formatter.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (socket != null) socket.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -51,6 +58,13 @@ public class Chat extends Transferable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (socket != null) socket.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

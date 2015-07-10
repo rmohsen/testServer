@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.Gate;
 import Server.Model.Processor;
 import Logic.Info;
 
@@ -10,16 +11,18 @@ public class KKClient extends Processor {
 
     int PRIMARY_PORT_NUMBER = 8000;
     Gate gate = new Gate(PRIMARY_PORT_NUMBER,this);
-    String hostname = null;
+    String hostname = "127.1.1.1";
 
     @Override
     public void run() {
         Info lastInfo = gate.getInfo() ;
-        if (lastInfo.isRunning()) {
-            //TODO: set appropriate hostname
-            //TODO: initial the gate
+        if (gate.getMAIN_PORT_NUMBER() == 0){
             gate.makeConnection(hostname);
             gate.openAllGates();
+        }
+        if (lastInfo == null ||lastInfo.isRunning()) {
+
+            //TODO: initial the gate
         }
         gate.openSendGate(hostname);
     }
