@@ -1,13 +1,18 @@
-package Graphic;
+package bozorg.graphic;
 
-import Logic.Judge;
-import Logic.JudgeAbstract;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import bozorg.common.GameObjectID;
+import bozorg.judge.Judge;
+import bozorg.judge.JudgeAbstract;
 
 public class SetPlayersPanel extends JPanel {
 	private boolean enable;
@@ -50,11 +55,11 @@ public class SetPlayersPanel extends JPanel {
 				int[] players = new int[tmp.size()];
 				for (int i = 0; i < tmp.size(); i++)
 					players[i] = tmp.get(i);
-				new Judge().loadMap(cellsType, wallsType, players);
+				Judge judge = new Judge();
+				judge.loadMap(cellsType, wallsType, players);
 				enable = false;
-//				MyFrame.frame.setContentPane(new GamePanel(GameObjectID
-//						.create(Player.class), new Logic(), false));
-//				MyFrame.frame.setVisible(true);
+				MyFrame.frame.setContentPane(new GamePanel(judge.getEveryThing().get(0), judge, false));
+				MyFrame.frame.setVisible(true);
 			}
 		});
 		next.setBounds(MyFrame.WIDTH - 120, 270, 100, 30);
