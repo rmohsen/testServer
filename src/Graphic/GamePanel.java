@@ -1,14 +1,20 @@
-package Graphic;
-import Logic.BozorgExceptionBase;
-import Logic.GameObjectID;
-import Logic.Judge;
-import Logic.JudgeAbstract;
+package bozorg.graphic;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
+import bozorg.common.GameObjectID;
+import bozorg.common.exceptions.BozorgExceptionBase;
+import bozorg.judge.Judge;
+import bozorg.judge.JudgeAbstract;
 
 public class GamePanel extends JPanel {
 	private Judge judge;
@@ -172,20 +178,18 @@ public class GamePanel extends JPanel {
 				e.printStackTrace();
 			}
 		}
+		if(lookingPlayerCombo.getSelectedItem().equals("all"))
+			lookingPlayer = null;
 		int row = this.judge.getMapHeight();
 		int col = this.judge.getMapWidth();
 		cells = new Cell[row][col];
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < col; j++) {
 				if (lookingPlayer != null) {
-					try {
-						cells[i][j].type = this.judge.getMapCellType(i, j,
-								lookingPlayer);
-						cells[i][j].wallType = this.judge.getMapWallType(i, j,
-								lookingPlayer);
-					} catch (BozorgExceptionBase bozorgExceptionBase) {
-						bozorgExceptionBase.printStackTrace();
-					}
+					cells[i][j].type = this.judge.getMapCellType(i, j,
+							lookingPlayer);
+					cells[i][j].wallType = this.judge.getMapWallType(i, j,
+							lookingPlayer);
 				} else {
 					cells[i][j].type = this.judge.getMapCellType(i, j);
 					cells[i][j].wallType = this.judge.getMapWallType(i, j);
