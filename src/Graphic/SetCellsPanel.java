@@ -1,14 +1,11 @@
-package bozorg.graphic;
+package Graphic;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import Logic.JudgeAbstract;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import bozorg.judge.JudgeAbstract;
 
 public class SetCellsPanel extends JPanel {
 	private boolean enable;

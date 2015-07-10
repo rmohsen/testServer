@@ -1,17 +1,13 @@
-package bozorg.graphic;
+package Graphic;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import Logic.Judge;
+import Logic.JudgeAbstract;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Vector;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import bozorg.judge.Judge;
-import bozorg.judge.JudgeAbstract;
 
 public class SetPlayersPanel extends JPanel {
 	private boolean enable;
@@ -29,13 +25,13 @@ public class SetPlayersPanel extends JPanel {
 		setPreferredSize(new Dimension(MyFrame.WIDTH, MyFrame.HEIGHT));
 		for (int i = 0; i < 4; i++) {
 			btns[i] = new JButton(btnsString[i]);
-			btns[i].addActionListener(new bozorg.graphic.setPlayersAddActionListener(
+			btns[i].addActionListener(new setPlayersAddActionListener(
 					players[i]));
 			btns[i].setBounds(MyFrame.WIDTH - 120, 20 + 50 * i, 100, 30);
 			add(btns[i]);
 		}
 		removeBtn = new JButton("remove");
-		removeBtn.addActionListener(new bozorg.graphic.setPlayersRemoveActionListener());
+		removeBtn.addActionListener(new setPlayersRemoveActionListener());
 		removeBtn.setBounds(MyFrame.WIDTH - 120, 220, 100, 30);
 		add(removeBtn);
 		next = new JButton("next");
@@ -57,7 +53,7 @@ public class SetPlayersPanel extends JPanel {
 				new Judge().loadMap(cellsType, wallsType, players);
 				enable = false;
 //				MyFrame.frame.setContentPane(new GamePanel(GameObjectID
-//						.create(Player.class), new Judge(), false));
+//						.create(Player.class), new Logic(), false));
 //				MyFrame.frame.setVisible(true);
 			}
 		});

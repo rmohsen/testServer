@@ -1,4 +1,4 @@
-package judge;
+package Logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public abstract class JudgeAbstract {
 	public abstract void getGift(GameObjectID player)
 			throws BozorgExceptionBase;
 
-	// AI functions. these functions will never be used in judge
+	// AI functions. these functions will never be used in Logic
 	public abstract void AIByStudents(GameObjectID player);
 
 	public void AIByTAs(GameObjectID player) {
@@ -105,7 +105,7 @@ public abstract class JudgeAbstract {
 
 	// get info
 	public abstract ArrayList<GameObjectID> getEveryThing(); // will never be
-																// used in judge
+																// used in Logic
 
 	public abstract ArrayList<String> getVision(GameObjectID player)
 			throws BozorgExceptionBase;
@@ -122,13 +122,13 @@ public abstract class JudgeAbstract {
 	// Server.Controller functions
 	public abstract void next50milis();
 
-	public abstract void startTimer();// will never be used in judge
+	public abstract void startTimer();// will never be used in Logic
 
 	public abstract void pauseTimer();
 
 	public abstract float getTime();
 
-	// Judge cheat functions
+	// Logic cheat functions
 	public abstract void updateInfo(GameObjectID id, String infoKey,
 			Integer infoValue) throws BozorgExceptionBase;
 
