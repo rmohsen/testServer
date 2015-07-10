@@ -1,7 +1,5 @@
 package Server.Model;
 
-import Server.Controller.Processor;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;

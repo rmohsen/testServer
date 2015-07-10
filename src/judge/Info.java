@@ -10,6 +10,8 @@ public class Info {
         return admin;
     }
 
+//    private GameObjectID objectID = new GameObjectID();
+
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }

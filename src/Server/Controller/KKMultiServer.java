@@ -1,10 +1,10 @@
 package Server.Controller;
 
-import Server.Model.Data;
+import Server.Model.Processor;
 import judge.Info;
 
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 

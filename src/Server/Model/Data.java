@@ -1,8 +1,5 @@
 package Server.Model;
 
-import Server.Model.*;
-import Server.Controller.*;
-
 import judge.Info;
 
 import java.io.IOException;

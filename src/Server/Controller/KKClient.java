@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import Server.Model.Processor;
 import judge.Info;
 
 /**
