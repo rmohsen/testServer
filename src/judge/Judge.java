@@ -1,10 +1,10 @@
-package Logic;
+package judge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public class Judge extends JudgeAbstract {
+class Judge extends JudgeAbstract {
 
 	public static ArrayList<Object> objects=new ArrayList<Object>();
 	public static ArrayList<GameObjectID> objectsId=new ArrayList<GameObjectID>();
@@ -350,11 +350,193 @@ public class Judge extends JudgeAbstract {
 
 }
 
+class Player{
+	
+	int fans;
+	int speed;
+	int vision;
+	int power;
+	int name;
+	int moveDir=0;
+	int moveTime=0;
+	int attackDir=0;
+	int attackTime=0;
+	int hp=100;
+	int doubleSpeed=0;
+	int globalVision=0;
+	int stun=0;
+	int jump=0;
+	int dead=0;
+	public int x;
+	public int y;
+	public GameObjectID id;
+	
+	public Player(int i) {
+		this.name=i;
+		if(i==Judge.HASIN){
+			fans=10;
+			speed=500;
+			vision=3;
+			power=5;
+		}
+		if(i==Judge.JAFAR){
+			fans=5;
+			speed=200;
+			vision=3;
+			power=1;
+		}
+		if(i==Judge.SAMAN){
+			fans=100;
+			speed=500;
+			vision=3;
+			power=5;
+		}
+		if(i==Judge.REZA){
+			fans=0;
+			speed=500;
+			vision=6;
+			power=4;
+		}
+	}
+	
+	public void next50milis(){
+		if(dead>0){
+			dead-=50;
+			return;
+		}
+		int t=50;
+		if(doubleSpeed>0){
+			t*=2;
+			doubleSpeed-=50;
+		}
+		if(stun>0){
+			stun-=50;
+			return;
+		}
+		if(globalVision>0)
+			globalVision-=50;
+		if(jump>0)
+			jump-=50;
+		if(attackTime>0){
+			attackTime-=t;
+			if(attackTime==0){
+				int x = this.x,y = this.y;
+				if(attackDir==JudgeAbstract.UP){
+					x=this.x-1;
+					y=this.y;
+				}
+				if(attackDir==JudgeAbstract.DOWN){
+					x=this.x+1;
+					y=this.y;
+				}
+				if(attackDir==JudgeAbstract.RIGHT){
+					x=this.x;
+					y=this.y+1;
+				}
+				if(attackDir==JudgeAbstract.LEFT){
+					x=this.x;
+					y=this.y-1;
+				}
+				for(Player p:Judge.players){
+					if(this.equals(p))
+						continue;
+					if(p.x==x && p.y==y)
+						p.hp=Math.max(p.hp-this.power,0);
+					if(p.hp==0){
+						p.dead=30000;
+						p.attackTime=0;
+						p.moveTime=0;
+						p.doubleSpeed=0;
+						p.globalVision=0;
+						p.jump=0;
+						p.stun=0;
+						p.hp=100;
+					}
+				}
+			}
+		}
+		if(moveTime>0){
+			moveTime-=t;
+			if(moveTime==0){
+				if(attackDir==JudgeAbstract.UP){
+					this.x--;
+				}
+				if(attackDir==JudgeAbstract.DOWN){
+					this.x++;
+				}
+				if(attackDir==JudgeAbstract.RIGHT){
+					this.y++;
+				}
+				if(attackDir==JudgeAbstract.LEFT){
+					this.y--;
+				}
+			}
+		}
+	}
+}
 
+class Fan{
+	public GameObjectID id;
+	public int x,y;
+	public Player owner;
+	public boolean isAlive=true;
+	public Fan(int x, int y, Player player) {
+		this.x=x;
+		this.y=y;
+		this.owner=player;
+	}
+}
 
+class Map{
+	Cell[][] map;
+	int width,height;
+	public Map(int[][] cellsType,int[][] wallsType,Player[] players){
+		this.width=cellsType.length;
+		this.height=cellsType[0].length;
+		map=new Cell[width][height];
+		for(int i=0;i<this.width;i++)
+			for(int j=0;j<this.height;j++)
+				map[i][j]=new Cell(cellsType[i][j],wallsType[i][j]);
+		int cnt=0;
+		for(int i=0;i<this.width;i++)
+			for(int j=0;j<this.height;j++)
+				if(map[i][j].getType()==Judge.START_CELL){
+					players[cnt].x=i;
+					players[cnt].y=j;
+					cnt++;
+				}
+	}
+}
 
+class Cell{
+	int type;
+	int walls;
+	public Cell(int type,int walls){
+		this.type=type;
+		this.walls=walls;
+	}
+	
+	public int getType(){
+		return this.type;
+	}
+	
+	public void setType(int type){
+		this.type=type;
+	}
 
+	public boolean up(){
+		return (this.walls%2==0);
+	}
+	
+	public boolean right(){
+		return ((this.walls/2)%2==0);
+	}
 
+	public boolean down(){
+		return ((this.walls/4)%2==0);
+	}
 
-
-
+	public boolean left(){
+		return ((this.walls/8)%2==0);
+	}
+}

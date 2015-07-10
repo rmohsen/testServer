@@ -1,6 +1,7 @@
 package Server.Controller;
 
-import Logic.Info;
+import Server.Model.Data;
+import judge.Info;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +28,13 @@ public class KnockKnockProtocol {
                     }
                     return portNumber;
                 }
+                if (inputLine.contains("PASSWORD KICK")){
+                    inputLine = inputLine.substring(14);
+                    HashMap hashMap = ((KKMultiServer)(serverThread.getGate().getProcessor())).getThreadHashMap();
+                    if (hashMap.containsKey(inputLine) && serverThread.getGate().getInfo().isAdmin()){
+                        hashMap.remove(inputLine);
+                    }
+                }
                 break;
             case "MAIN":
                 if (inputLine.equals("PAUSE")){
@@ -34,14 +42,6 @@ public class KnockKnockProtocol {
                     Info lastInfo = infos.get(infos.size()-1);
                     lastInfo.setRunning(false);
                     serverThread.getGate().setInfo(lastInfo);
-                }
-                String password = ((KKMultiServer)(serverThread.processor)).getPassword();
-                if (inputLine.contains(password+" KICK")){
-                    inputLine = inputLine.substring(password.length()+5);
-                    HashMap hashMap = ((KKMultiServer)(serverThread.getGate().getProcessor())).getThreadHashMap();
-                    if (hashMap.containsKey(inputLine) && serverThread.getGate().getInfo().isAdmin()){
-                        hashMap.remove(inputLine);
-                    }
                 }
                 Gate gate = serverThread.getGate();
                 gate.setSendingDestination(inputLine);

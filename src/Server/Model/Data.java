@@ -1,6 +1,6 @@
 package Server.Model;
 
-import Logic.Info;
+import judge.Info;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

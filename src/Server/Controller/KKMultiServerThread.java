@@ -27,22 +27,21 @@ public class KKMultiServerThread extends Thread {
         try {
             String inputLine;
             int[] outputLines;
-            synchronized (socket) {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                KnockKnockProtocol kkp = new KnockKnockProtocol();
-                inputLine = in.readLine();
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                outputLines = kkp.processInput(inputLine, "PRIMARY", this);
-                gate.initializePortsNumber(outputLines);
-                gate.openAllGates();
-                processor.getUserArray().add(gate.getInfo().getUserName());
+            KnockKnockProtocol kkp = new KnockKnockProtocol();
+            inputLine = in.readLine();
 
-                for (int i = 0; i < 7; i++) {
-                    // TODO: appropriate out
-                    out.println(outputLines[i]);
-                }
+            outputLines = kkp.processInput(inputLine,"PRIMARY",this);
+            gate.initializePortsNumber(outputLines);
+            gate.openAllGates();
+            processor.getUserArray().add(gate.getInfo().getUserName());
+
+            for (int i = 0; i < 7; i++) {
+                // TODO: appropriate out
+                out.println(outputLines[i]);
             }
 
             String location = null;

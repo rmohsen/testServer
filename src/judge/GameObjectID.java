@@ -1,4 +1,4 @@
-package Logic;
+package judge;
 
 @SuppressWarnings("serial")
 public class GameObjectID implements java.io.Serializable {

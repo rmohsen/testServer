@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.Model.*;
-import Logic.Info;
+import judge.Info;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -349,6 +349,8 @@ public class Gate {
             //make needed receiving ports
 
             //make needed sending ports
+
+            //TODO : make loop
 
             //initialize receiving port
 
