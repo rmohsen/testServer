@@ -1,9 +1,9 @@
-package bozorg.graphic;
+package Graphic;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import bozorg.judge.JudgeAbstract;
+import Logic.JudgeAbstract;
 
 public class SetCellsMouseListener implements MouseListener{
 	public static int CellType = JudgeAbstract.NONE_CELL;

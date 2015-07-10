@@ -1,4 +1,4 @@
-package bozorg.graphic;
+package Graphic;
 
 import java.awt.Color;
 import java.awt.Graphics;

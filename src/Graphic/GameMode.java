@@ -1,4 +1,4 @@
-package bozorg.graphic;
+package Graphic;
 
 public class GameMode {
 	public static int gamemode;

@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.Model.Processor;
-import judge.Info;
+import Logic.Info;
 
 import java.io.IOException;
 import java.net.ServerSocket;

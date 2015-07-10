@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.Model.Processor;
-import judge.Info;
+import Logic.Info;
 
 /**
  * Created by Lenovo on 7/5/2015.

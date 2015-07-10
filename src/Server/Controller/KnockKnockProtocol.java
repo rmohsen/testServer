@@ -1,7 +1,6 @@
 package Server.Controller;
 
-import Server.Model.Data;
-import judge.Info;
+import Logic.Info;
 
 import java.util.ArrayList;
 import java.util.HashMap;

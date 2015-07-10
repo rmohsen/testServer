@@ -1,21 +1,13 @@
-package bozorg.graphic;
+package Graphic;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import Logic.Judge;
+import Logic.JudgeAbstract;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Vector;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-<<<<<<< HEAD:src/Graphic/SetPlayersPanel.java
-import bozorg.common.GameObjectID;
-=======
->>>>>>> parent of 144bddd... delete some unnecessary object and fix bug:src/bozorg/graphic/SetPlayersPanel.java
-import bozorg.judge.Judge;
-import bozorg.judge.JudgeAbstract;
 
 public class SetPlayersPanel extends JPanel {
 	private boolean enable;
@@ -33,13 +25,13 @@ public class SetPlayersPanel extends JPanel {
 		setPreferredSize(new Dimension(MyFrame.WIDTH, MyFrame.HEIGHT));
 		for (int i = 0; i < 4; i++) {
 			btns[i] = new JButton(btnsString[i]);
-			btns[i].addActionListener(new bozorg.graphic.setPlayersAddActionListener(
+			btns[i].addActionListener(new Graphic.setPlayersAddActionListener(
 					players[i]));
 			btns[i].setBounds(MyFrame.WIDTH - 120, 20 + 50 * i, 100, 30);
 			add(btns[i]);
 		}
 		removeBtn = new JButton("remove");
-		removeBtn.addActionListener(new bozorg.graphic.setPlayersRemoveActionListener());
+		removeBtn.addActionListener(new Graphic.setPlayersRemoveActionListener());
 		removeBtn.setBounds(MyFrame.WIDTH - 120, 220, 100, 30);
 		add(removeBtn);
 		next = new JButton("next");
@@ -61,14 +53,11 @@ public class SetPlayersPanel extends JPanel {
 				Judge judge = new Judge();
 				judge.loadMap(cellsType, wallsType, players);
 				enable = false;
-<<<<<<< HEAD:src/Graphic/SetPlayersPanel.java
 				MyFrame.frame.setContentPane(new GamePanel(judge.getEveryThing().get(0), judge, false));
 				MyFrame.frame.setVisible(true);
-=======
 //				MyFrame.frame.setContentPane(new GamePanel(GameObjectID
 //						.create(Player.class), new Judge(), false));
 //				MyFrame.frame.setVisible(true);
->>>>>>> parent of 144bddd... delete some unnecessary object and fix bug:src/bozorg/graphic/SetPlayersPanel.java
 			}
 		});
 		next.setBounds(MyFrame.WIDTH - 120, 270, 100, 30);

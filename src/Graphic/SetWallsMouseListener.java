@@ -1,4 +1,4 @@
-package bozorg.graphic;
+package Graphic;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
