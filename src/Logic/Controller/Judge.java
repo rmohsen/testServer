@@ -84,7 +84,12 @@ public class Judge extends JudgeAbstract {
 	@Override
 	public void setup() {
 		// TODO Auto-generated method stub
-		
+		for(int[] arr:AIvisionType)
+			for(int i:arr)
+				i=Judge.DARK_CELL;
+		for(int[] arr:AIvisionWalls)
+			for(int i:arr)
+				i=Judge.XXXX_WALL;
 	}
 
 	@Override
@@ -173,10 +178,119 @@ public class Judge extends JudgeAbstract {
 		map.getMap()[p.x][p.y].setType(0);
 	}
 
+
+	int[][] AIvisionType=new int[map.width][map.height];
+	int[][] AIvisionWalls=new int[map.width][map.height];
+	
 	@Override
 	public void AIByStudents(GameObjectID player) {
-		// TODO Auto-generated method stub
-		
+		boolean hasDark=false;
+		int firstDir=4;
+		for(int i=0;i<map.width;i++){
+			for(int j=0;j<map.height;j++){
+				try {
+					if(this.getMapCellType(i, j, player)!=Judge.DARK_CELL)
+						AIvisionType[i][j]=this.getMapCellType(i, j, player);
+					else if(AIvisionType[i][j]==DARK_CELL)
+						hasDark=true;
+				} catch (BozorgExceptionBase e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					if(this.getMapWallType(i, j, player)!=Judge.XXXX_WALL)
+						AIvisionWalls[i][j]=this.getMapWallType(i, j, player);
+				} catch (BozorgExceptionBase e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		Player p=(Player) objects.get(player.getNumber());
+		if(AIvisionType[p.x][p.y]==BONUS_CELL && (hasDark || p.hp<20))
+			try {
+				this.getGift(player);
+			} catch (BozorgExceptionBase e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		ArrayList<Pair> cells=new ArrayList<Pair>();
+		cells.add(new Pair(p.x, p.y,4));
+		Pair tmp;
+		if(p.attackTime==0)
+			try {
+				this.attack(player, NONE);
+			} catch (BozorgExceptionBase e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		if(p.moveTime==0){
+			for(int i=0;i<cells.size();i++){
+				tmp=cells.get(i);
+				if(AIvisionType[tmp.first][tmp.second]==JJ_CELL){
+					try {
+						this.movePlayer(player, tmp.third);
+					} catch (BozorgExceptionBase e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
+				}
+				if(AIvisionType[tmp.first][tmp.second]==DARK_CELL && firstDir==4){
+					firstDir=tmp.third;
+				}
+				if((AIvisionWalls[tmp.first][tmp.second]/1)%2==0){
+					boolean contain=false;
+					for(Pair pair:cells)
+						if(pair.first==tmp.first-1 && pair.second==tmp.second)
+							contain=true;
+					if(!contain)
+						if(tmp.third==4)
+							cells.add(new Pair(tmp.first-1, tmp.second, UP));
+						else
+							cells.add(new Pair(tmp.first-1, tmp.second, tmp.third));
+				}
+				if((AIvisionWalls[tmp.first][tmp.second]/2)%2==0){
+					boolean contain=false;
+					for(Pair pair:cells)
+						if(pair.first==tmp.first && pair.second==tmp.second+1)
+							contain=true;
+					if(!contain)
+						if(tmp.third==4)
+							cells.add(new Pair(tmp.first, tmp.second+1, RIGHT));
+						else
+							cells.add(new Pair(tmp.first, tmp.second+1, tmp.third));
+				}
+				if((AIvisionWalls[tmp.first][tmp.second]/4)%2==0){
+					boolean contain=false;
+					for(Pair pair:cells)
+						if(pair.first==tmp.first+1 && pair.second==tmp.second)
+							contain=true;
+					if(!contain)
+						if(tmp.third==4)
+							cells.add(new Pair(tmp.first+1, tmp.second, DOWN));
+						else
+							cells.add(new Pair(tmp.first+1, tmp.second, tmp.third));
+				}
+				if((AIvisionWalls[tmp.first][tmp.second]/1/8)%2==0){
+					boolean contain=false;
+					for(Pair pair:cells)
+						if(pair.first==tmp.first && pair.second==tmp.second-1)
+							contain=true;
+					if(!contain)
+						if(tmp.third==4)
+							cells.add(new Pair(tmp.first, tmp.second-1, LEFT));
+						else
+							cells.add(new Pair(tmp.first, tmp.second-1, tmp.third));
+				}
+			}
+			try {
+				this.movePlayer(player, firstDir);
+			} catch (BozorgExceptionBase e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -356,3 +470,11 @@ public class Judge extends JudgeAbstract {
 
 }
 
+class Pair{
+	public int first=0,second=0,third=0;
+	public Pair(int first,int second,int third){
+		this.first=first;
+		this.second=second;
+		this.third=third;
+	}
+}
