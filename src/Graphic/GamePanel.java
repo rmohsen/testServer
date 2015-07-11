@@ -23,8 +23,8 @@ public class GamePanel extends JPanel {
 	private JButton attackBtn[] = new JButton[4];
 	private JButton throwFanBtn;
 	private JButton getGiftBtn;
-
-	public GamePanel(GameObjectID curPlayer, Judge judge,boolean isNetwork) {
+	private String[] playersName = {"Saman","Jafar","Reza","Hasin"};
+	public GamePanel(GameObjectID curPlayer, Judge judge, boolean isNetwork) {
 		this.curPlayer = curPlayer;
 		this.judge = judge;
 		this.isNetwork = isNetwork;
@@ -36,49 +36,72 @@ public class GamePanel extends JPanel {
 		cells = new Cell[row][col];
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < col; j++) {
-				cells[i][j].type = this.judge.getMapCellType(i, j);
-				cells[i][j].wallType = this.judge.getMapWallType(i, j);
+				cells[i][j] = new Cell(j * Cell.WIDTH, i * Cell.HEIGHT,
+						this.judge.getMapCellType(i, j),
+						this.judge.getMapWallType(i, j));
+				// if(this.judge.getMapCellType(i, j)!=0)
+				// System.out.println(this.judge.getMapCellType(i, j));
+				// System.out.println(this.judge.getMapCellType(i, j));
+				// cells[i][j].type = this.judge.getMapCellType(i, j);
+				// cells[i][j].wallType = this.judge.getMapWallType(i, j);
 			}
 		lookingPlayerCombo.addItem("all");
 		for (GameObjectID gameObject : this.judge.getEveryThing()) {
 			try {
-				if (this.judge.getInfo(gameObject).get("IS_ALIVE")
-						.equals("ALIVE")) {
-					int gbrow = this.judge.getInfo(gameObject).get("ROW");
-					int gbcol = this.judge.getInfo(gameObject).get("COL");
-					if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("SAMAN")) {
-						lookingPlayerCombo.addItem("SAMAN");
-						allPlayers.add(gameObject);
-						cells[gbrow][gbcol].players.add(JudgeAbstract.SAMAN);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("JAFAR")) {
-						lookingPlayerCombo.addItem("JAFAR");
-						allPlayers.add(gameObject);
-						cells[gbrow][gbcol].players.add(JudgeAbstract.JAFAR);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("REZA")) {
-						lookingPlayerCombo.addItem("REZA");
-						allPlayers.add(gameObject);
-						cells[gbrow][gbcol].players.add(JudgeAbstract.REZA);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("HASIN")) {
-						lookingPlayerCombo.addItem("HASIN");
-						allPlayers.add(gameObject);
-						cells[gbrow][gbcol].players.add(JudgeAbstract.HASIN);
+				if (this.judge.getInfo(gameObject).get(JudgeAbstract.IS_ALIVE)
+						.equals(JudgeAbstract.ALIVE)) {
+					int gbrow = this.judge.getInfo(gameObject).get(
+							JudgeAbstract.ROW);
+					int gbcol = this.judge.getInfo(gameObject).get(
+							JudgeAbstract.COL);
+					if (this.judge.getInfo(gameObject).get(JudgeAbstract.NAME) != null) {
+						if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.SAMAN)) {
+							lookingPlayerCombo.addItem(playersName[JudgeAbstract.SAMAN]);
+							allPlayers.add(gameObject);
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.SAMAN);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.JAFAR)) {
+							lookingPlayerCombo.addItem(playersName[JudgeAbstract.JAFAR]);
+							allPlayers.add(gameObject);
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.JAFAR);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.REZA)) {
+							lookingPlayerCombo.addItem(playersName[JudgeAbstract.REZA]);
+							allPlayers.add(gameObject);
+							cells[gbrow][gbcol].players.add(JudgeAbstract.REZA);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.HASIN)) {
+							lookingPlayerCombo.addItem(playersName[JudgeAbstract.HASIN]);
+							allPlayers.add(gameObject);
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.HASIN);
+						}
 					}
-					if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("SAMAN")) {
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.SAMAN);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("JAFAR")) {
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.JAFAR);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("REZA")) {
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.REZA);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("HASIN")) {
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.HASIN);
+					if (this.judge.getInfo(gameObject).get(JudgeAbstract.OWNER) != null) {
+						if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.SAMAN)) {
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.SAMAN);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.JAFAR)) {
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.JAFAR);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.REZA)) {
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.REZA);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.HASIN)) {
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.HASIN);
+						}
 					}
 				}
 			} catch (BozorgExceptionBase e) {
@@ -93,8 +116,8 @@ public class GamePanel extends JPanel {
 		String strs[] = { "Up", "Down", "Right", "Left" };
 		for (int i = 0; i < 4; i++) {
 			attackBtn[i] = new JButton(strs[i]);
-			attackBtn[i].addActionListener(new Graphic.dirActionListener(dirs[i],
-					this.judge, curPlayer));
+			attackBtn[i].addActionListener(new Graphic.dirActionListener(
+					dirs[i], this.judge, curPlayer));
 			attackBtn[i].setBounds(MyFrame.WIDTH - 120, 70 + 50 * i, 100, 30);
 			add(attackBtn[i]);
 		}
@@ -130,10 +153,10 @@ public class GamePanel extends JPanel {
 		});
 		getGiftBtn.setBounds(MyFrame.WIDTH - 120, 320, 100, 30);
 		add(getGiftBtn);
-		
+
 		addKeyListener(new GameKeyListener(curPlayer, allPlayers, judge));
 		setFocusable(true);
-		
+
 		Thread updateThread = new Thread() {
 			@Override
 			public void run() {
@@ -163,9 +186,11 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-		for(GameObjectID go : allPlayers){
+		for (GameObjectID go : allPlayers) {
 			try {
-				if(judge.getInfo(go).get("NAME").equals(lookingPlayerCombo.getSelectedItem())){
+				if (playersName[judge.getInfo(go).get(JudgeAbstract.NAME)]
+						.equals(lookingPlayerCombo.getSelectedItem())) {
+					System.out.println("entered!");
 					lookingPlayer = go;
 				}
 			} catch (BozorgExceptionBase e) {
@@ -173,18 +198,17 @@ public class GamePanel extends JPanel {
 				e.printStackTrace();
 			}
 		}
-		if(lookingPlayerCombo.getSelectedItem().equals("all"))
+		if (lookingPlayerCombo.getSelectedItem().equals("all"))
 			lookingPlayer = null;
 		int row = this.judge.getMapHeight();
 		int col = this.judge.getMapWidth();
-		cells = new Cell[row][col];
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < col; j++) {
 				if (lookingPlayer != null) {
 					try {
-						cells[i][j].type = this.judge.getMapCellType(i, j,
+						cells[i][j].type = this.judge.getMapCellType(j, i,
 								lookingPlayer);
-						cells[i][j].wallType = this.judge.getMapWallType(i, j,
+						cells[i][j].wallType = this.judge.getMapWallType(j, i,
 								lookingPlayer);
 					} catch (BozorgExceptionBase bozorgExceptionBase) {
 						bozorgExceptionBase.printStackTrace();
@@ -196,43 +220,60 @@ public class GamePanel extends JPanel {
 			}
 		for (GameObjectID gameObject : this.judge.getEveryThing()) {
 			try {
-				if (this.judge.getInfo(gameObject).get("IS_ALIVE")
-						.equals("ALIVE")) {
-					int gbrow = this.judge.getInfo(gameObject).get("ROW");
-					int gbcol = this.judge.getInfo(gameObject).get("COL");
-					if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("SAMAN")) {
-						cells[gbrow][gbcol].players.clear();
-						cells[gbrow][gbcol].players.add(JudgeAbstract.SAMAN);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("JAFAR")) {
-						cells[gbrow][gbcol].players.clear();
-						cells[gbrow][gbcol].players.add(JudgeAbstract.JAFAR);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("REZA")) {
-						cells[gbrow][gbcol].players.clear();
-						cells[gbrow][gbcol].players.add(JudgeAbstract.REZA);
-					} else if (this.judge.getInfo(gameObject).get("NAME")
-							.equals("HASIN")) {
-						cells[gbrow][gbcol].players.clear();
-						cells[gbrow][gbcol].players.add(JudgeAbstract.HASIN);
+				if (this.judge.getInfo(gameObject).get(JudgeAbstract.IS_ALIVE)
+						.equals(JudgeAbstract.ALIVE)) {
+					int gbrow = this.judge.getInfo(gameObject).get(
+							JudgeAbstract.ROW);
+					int gbcol = this.judge.getInfo(gameObject).get(
+							JudgeAbstract.COL);
+					if (this.judge.getInfo(gameObject).get(JudgeAbstract.NAME) != null) {
+						if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.SAMAN)) {
+							cells[gbrow][gbcol].players.clear();
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.SAMAN);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.JAFAR)) {
+							cells[gbrow][gbcol].players.clear();
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.JAFAR);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.REZA)) {
+							cells[gbrow][gbcol].players.clear();
+							cells[gbrow][gbcol].players.add(JudgeAbstract.REZA);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.NAME)
+								.equals(JudgeAbstract.HASIN)) {
+							cells[gbrow][gbcol].players.clear();
+							cells[gbrow][gbcol].players
+									.add(JudgeAbstract.HASIN);
+						}
 					}
-					if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("SAMAN")) {
-						cells[gbrow][gbcol].fans.clear();
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.SAMAN);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("JAFAR")) {
-						cells[gbrow][gbcol].fans.clear();
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.JAFAR);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("REZA")) {
-						cells[gbrow][gbcol].fans.clear();
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.REZA);
-					} else if (this.judge.getInfo(gameObject).get("OWNER")
-							.equals("HASIN")) {
-						cells[gbrow][gbcol].fans.clear();
-						cells[gbrow][gbcol].fans.add(JudgeAbstract.HASIN);
+					if (this.judge.getInfo(gameObject).get(JudgeAbstract.OWNER) != null) {
+						if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.SAMAN)) {
+							cells[gbrow][gbcol].fans.clear();
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.SAMAN);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.JAFAR)) {
+							cells[gbrow][gbcol].fans.clear();
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.JAFAR);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.REZA)) {
+							cells[gbrow][gbcol].fans.clear();
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.REZA);
+						} else if (this.judge.getInfo(gameObject)
+								.get(JudgeAbstract.OWNER)
+								.equals(JudgeAbstract.HASIN)) {
+							cells[gbrow][gbcol].fans.clear();
+							cells[gbrow][gbcol].fans.add(JudgeAbstract.HASIN);
+						}
 					}
 				}
 			} catch (BozorgExceptionBase e) {

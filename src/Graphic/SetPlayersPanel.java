@@ -1,9 +1,11 @@
 package Graphic;
 
+import Logic.BozorgExceptionBase;
 import Logic.Judge;
 import Logic.JudgeAbstract;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +33,8 @@ public class SetPlayersPanel extends JPanel {
 			add(btns[i]);
 		}
 		removeBtn = new JButton("remove");
-		removeBtn.addActionListener(new Graphic.setPlayersRemoveActionListener());
+		removeBtn
+				.addActionListener(new Graphic.setPlayersRemoveActionListener());
 		removeBtn.setBounds(MyFrame.WIDTH - 120, 220, 100, 30);
 		add(removeBtn);
 		next = new JButton("next");
@@ -43,21 +46,25 @@ public class SetPlayersPanel extends JPanel {
 				int[][] wallsType = new int[MyFrame.ROW][MyFrame.COLUMN];
 				Vector<Integer> tmp = new Vector<Integer>();
 				for (int i = 0; i < MyFrame.ROW; i++)
-					for (int j = 0; j < MyFrame.COLUMN; j++)
+					for (int j = 0; j < MyFrame.COLUMN; j++) {
+						cellsType[i][j] = MyFrame.cells[i][j].type;
+						wallsType[i][j] = MyFrame.cells[i][j].wallType;
 						if (MyFrame.cells[i][j].type == JudgeAbstract.START_CELL
 								&& MyFrame.cells[i][j].players.size() > 0)
 							tmp.add(MyFrame.cells[i][j].players.get(0));
+					}
 				int[] players = new int[tmp.size()];
 				for (int i = 0; i < tmp.size(); i++)
 					players[i] = tmp.get(i);
 				Judge judge = new Judge();
 				judge.loadMap(cellsType, wallsType, players);
 				enable = false;
-				MyFrame.frame.setContentPane(new GamePanel(judge.getEveryThing().get(0), judge, false));
+				MyFrame.frame.setContentPane(new GamePanel(judge
+						.getEveryThing().get(0), judge, false));
 				MyFrame.frame.setVisible(true);
-//				MyFrame.frame.setContentPane(new GamePanel(GameObjectID
-//						.create(Player.class), new Judge(), false));
-//				MyFrame.frame.setVisible(true);
+				// MyFrame.frame.setContentPane(new GamePanel(GameObjectID
+				// .create(Player.class), new Judge(), false));
+				// MyFrame.frame.setVisible(true);
 			}
 		});
 		next.setBounds(MyFrame.WIDTH - 120, 270, 100, 30);

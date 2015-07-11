@@ -23,9 +23,7 @@ public class GameKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		for (GameObjectID go : players)
-			if (go == curPlayer)
-				players.remove(go);
+		players.remove(curPlayer);
 		try {
 			if (arg0.getKeyChar() == 'a')
 				judge.movePlayer(curPlayer, JudgeAbstract.LEFT);
