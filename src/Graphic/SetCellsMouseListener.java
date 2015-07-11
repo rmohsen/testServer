@@ -3,7 +3,7 @@ package Graphic;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Logic.JudgeAbstract;
+import Logic.Controller.JudgeAbstract;
 
 public class SetCellsMouseListener implements MouseListener{
 	public static int CellType = JudgeAbstract.NONE_CELL;

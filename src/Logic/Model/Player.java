@@ -1,4 +1,8 @@
-package Logic;
+package Logic.Model;
+
+import Logic.Common.GameObjectID;
+import Logic.Controller.Judge;
+import Logic.Controller.JudgeAbstract;
 
 /**
  * Created by Lenovo on 7/10/2015.
@@ -14,6 +18,151 @@ public class Player{
     int moveTime=0;
     int attackDir=0;
     int attackTime=0;
+
+    public int getFans() {
+        return fans;
+    }
+
+    public void setFans(int fans) {
+        this.fans = fans;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getVision() {
+        return vision;
+    }
+
+    public void setVision(int vision) {
+        this.vision = vision;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
+    }
+
+    public int getMoveDir() {
+        return moveDir;
+    }
+
+    public void setMoveDir(int moveDir) {
+        this.moveDir = moveDir;
+    }
+
+    public int getMoveTime() {
+        return moveTime;
+    }
+
+    public void setMoveTime(int moveTime) {
+        this.moveTime = moveTime;
+    }
+
+    public int getAttackDir() {
+        return attackDir;
+    }
+
+    public void setAttackDir(int attackDir) {
+        this.attackDir = attackDir;
+    }
+
+    public int getAttackTime() {
+        return attackTime;
+    }
+
+    public void setAttackTime(int attackTime) {
+        this.attackTime = attackTime;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getDoubleSpeed() {
+        return doubleSpeed;
+    }
+
+    public void setDoubleSpeed(int doubleSpeed) {
+        this.doubleSpeed = doubleSpeed;
+    }
+
+    public int getGlobalVision() {
+        return globalVision;
+    }
+
+    public void setGlobalVision(int globalVision) {
+        this.globalVision = globalVision;
+    }
+
+    public int getStun() {
+        return stun;
+    }
+
+    public void setStun(int stun) {
+        this.stun = stun;
+    }
+
+    public int getJump() {
+        return jump;
+    }
+
+    public void setJump(int jump) {
+        this.jump = jump;
+    }
+
+    public int getDead() {
+        return dead;
+    }
+
+    public void setDead(int dead) {
+        this.dead = dead;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public GameObjectID getId() {
+        return id;
+    }
+
+    public void setId(GameObjectID id) {
+        this.id = id;
+    }
+
     int hp=100;
     int doubleSpeed=0;
     int globalVision=0;
@@ -26,7 +175,7 @@ public class Player{
 
     public Player(int i) {
         this.name=i;
-        if(i==Judge.HASIN){
+        if(i== Judge.HASIN){
             fans=10;
             speed=500;
             vision=3;
@@ -74,7 +223,7 @@ public class Player{
             attackTime-=t;
             if(attackTime==0){
                 int x = this.x,y = this.y;
-                if(attackDir==JudgeAbstract.UP){
+                if(attackDir== JudgeAbstract.UP){
                     x=this.x-1;
                     y=this.y;
                 }

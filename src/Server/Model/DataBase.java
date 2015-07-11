@@ -1,6 +1,6 @@
 package Server.Model;
 
-import Logic.Map;
+import Logic.Model.Map;
 
 import java.util.ArrayList;
 
@@ -8,10 +8,20 @@ import java.util.ArrayList;
  * Created by Lenovo on 7/11/2015.
  */
 public class DataBase {
+
     ArrayList<Info> StoredData ;
     Info selfData;
     Map map;
     boolean running = true;
+    reqPack reqPack;
+
+    public Server.Model.reqPack getReqPack() {
+        return reqPack;
+    }
+
+    public void setReqPack(Server.Model.reqPack reqPack) {
+        this.reqPack = reqPack;
+    }
 
     public boolean isRunning() {
         return running;

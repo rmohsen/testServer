@@ -15,7 +15,7 @@ public class KKMultiServer extends Processor {
     static ArrayList<Integer> portArray = new ArrayList<Integer>(PRIMARY_PORT_NUMBER);
     protected ArrayList<Info> dataArray = new ArrayList<>();
     private ArrayList<KKMultiServerThread> threads = new ArrayList<>();
-    private HashMap<String, KKMultiServerThread> threadHashMap = new HashMap<>();
+    private HashMap<Integer, KKMultiServerThread> threadHashMap = new HashMap<>();
     String password = "1234";
 
     public ArrayList<Info> getDataArray() {
@@ -26,11 +26,11 @@ public class KKMultiServer extends Processor {
         this.dataArray = dataArray;
     }
 
-    public HashMap<String, KKMultiServerThread> getThreadHashMap() {
+    public HashMap<Integer, KKMultiServerThread> getThreadHashMap() {
         return threadHashMap;
     }
 
-    public void setThreadHashMap(HashMap<String, KKMultiServerThread> threadHashMap) {
+    public void setThreadHashMap(HashMap<Integer, KKMultiServerThread> threadHashMap) {
         this.threadHashMap = threadHashMap;
     }
 

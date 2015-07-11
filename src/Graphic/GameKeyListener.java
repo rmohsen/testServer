@@ -1,9 +1,9 @@
 package Graphic;
 
-import Logic.BozorgExceptionBase;
-import Logic.GameObjectID;
-import Logic.Judge;
-import Logic.JudgeAbstract;
+import Logic.Common.exception.BozorgExceptionBase;
+import Logic.Common.GameObjectID;
+import Logic.Controller.Judge;
+import Logic.Controller.JudgeAbstract;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

@@ -39,7 +39,6 @@ public class KKMultiServerThread extends Thread {
             outputLines = kkp.processInput(inputLine,"PRIMARY",this);
             gate.initializePortsNumber(outputLines);
             gate.openAllGates();
-            processor.getUserArray().add(gate.getSelfData().getUserName());
 
             if (inputLine != null) {
                 for (int i = 0; i < 7; i++) {

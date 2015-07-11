@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Chat extends Transferable {
 
     public Chat(Socket socket, Processor processor) {
-        super(socket,processor);
+        super(socket, processor);
     }
 
     public String getString() {
@@ -26,18 +26,18 @@ public class Chat extends Transferable {
         this.string = string;
     }
 
-    String string ;
+    String string;
 
     @Override
     public void sender() {
-        try{
+        try {
             OutputStream outputStream = socket.getOutputStream();
             Formatter formatter = new Formatter(outputStream);
             formatter.format(string);
             formatter.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (socket != null) socket.close();
 
@@ -50,15 +50,15 @@ public class Chat extends Transferable {
     @Override
     public void receiver() {
         try {
-        InputStream inputStream = socket.getInputStream();
+            InputStream inputStream = socket.getInputStream();
             Scanner scanner = new Scanner(inputStream);
-            while (scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 // TODO : print to appropriate place
                 processor.getChatArray().add(scanner.nextLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (socket != null) socket.close();
 

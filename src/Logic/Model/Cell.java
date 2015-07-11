@@ -1,9 +1,17 @@
-package Logic;
+package Logic.Model;
 
 /**
  * Created by Lenovo on 7/10/2015.
  */
 public class Cell{
+    public int getWalls() {
+        return walls;
+    }
+
+    public void setWalls(int walls) {
+        this.walls = walls;
+    }
+
     int type;
     int walls;
     public Cell(int type,int walls){

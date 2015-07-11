@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Logic.JudgeAbstract;
+import Logic.Controller.JudgeAbstract;
 
 public class SetCellsPanel extends JPanel {
 	private boolean enable;

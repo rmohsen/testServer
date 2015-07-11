@@ -6,7 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Logic.JudgeAbstract;
+import Logic.Controller.JudgeAbstract;
 
 public class MyFrame extends JFrame {
 	public static Graphic.MyFrame frame;

@@ -1,4 +1,10 @@
-package Logic;
+package Logic.Controller;
+
+import Logic.Common.exception.BozorgExceptionBase;
+import Logic.Common.GameObjectID;
+import Logic.Model.Fan;
+import Logic.Model.Map;
+import Logic.Model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,31 +37,31 @@ public class Judge extends JudgeAbstract {
 
 	@Override
 	public int getMapWidth() {
-		return map.width;
+		return map.getWidth();
 	}
 
 	@Override
 	public int getMapHeight() {
-		return map.height;
+		return map.getHeight();
 	}
 
 	@Override
 	public int getMapCellType(int col, int row) {
-		if(map.map[col][row].type==Judge.JJ_CELL)
+		if(map.getMap()[col][row].getType()==Judge.JJ_CELL)
 			if(time%5000!=0)
 				return Judge.NONE_CELL;
-		return map.map[col][row].type;
+		return map.getMap()[col][row].getType();
 	}
 
 	@Override
 	public int getMapCellType(int col, int row, GameObjectID player) throws BozorgExceptionBase {
 		String s=row+","+col;
 		if(getVision(player).contains(s)){
-			if(map.map[col][row].type==Judge.JJ_CELL)
+			if(map.getMap()[col][row].getType()==Judge.JJ_CELL)
 				if(time%5000!=0)
 					return Judge.NONE_CELL;
-			if(map.map[row][col].type<4)
-				return map.map[row][col].type;
+			if(map.getMap()[row][col].getType()<4)
+				return map.getMap()[row][col].getType();
 			return JudgeAbstract.BONUS_CELL;
 		}
 		return JudgeAbstract.DARK_CELL;
@@ -63,14 +69,14 @@ public class Judge extends JudgeAbstract {
 
 	@Override
 	public int getMapWallType(int col, int row) {
-		return map.map[col][row].walls;
+		return map.getMap()[col][row].getWalls();
 	}
 
 	@Override
 	public int getMapWallType(int col, int row, GameObjectID player) throws BozorgExceptionBase {
 		String s=row+","+col;
 		if(getVision(player).contains(s)){
-			return map.map[row][col].walls;
+			return map.getMap()[row][col].getWalls();
 		}
 		return JudgeAbstract.XXXX_WALL;
 	}
@@ -85,57 +91,57 @@ public class Judge extends JudgeAbstract {
 	public void movePlayer(GameObjectID player, int direction)
 			throws BozorgExceptionBase {
 		Player p=(Player) objects.get(player.getNumber());
-		int w=map.map[p.x][p.y].walls;
-		if(p.hp==0)
+		int w=map.getMap()[p.x][p.y].getWalls();
+		if(p.getHp()==0)
 			throw new BozorgExceptionBase();
 		if(direction<0 || direction>3)
 			throw new BozorgExceptionBase();
 		if((w>>direction)%2==1)
 			throw new BozorgExceptionBase();
-		if(p.moveTime>0)
+		if(p.getMoveTime()>0)
 			throw new BozorgExceptionBase();
-		p.moveTime+=p.speed;
-		p.moveDir=direction;
+		p.setMoveTime(p.getSpeed()+p.getMoveTime());
+		p.setMoveDir(direction);
 	}
 
 	@Override
 	public void attack(GameObjectID attacker, int direction)
 			throws BozorgExceptionBase {
 		Player p=(Player) objects.get(attacker.getNumber());
-		int w=map.map[p.x][p.y].walls;
-		if(p.hp==0)
+		int w=map.getMap()[p.x][p.y].getWalls();
+		if(p.getHp()==0)
 			throw new BozorgExceptionBase();
 		if(direction<0 || direction>4)
 			throw new BozorgExceptionBase();
 		if((w>>direction)%2==1)
 			throw new BozorgExceptionBase();
-		if(p.attackTime>0)
+		if(p.getAttackTime()>0)
 			throw new BozorgExceptionBase();
-		p.attackTime+=p.speed;
-		p.attackDir=direction;
+		p.setAttackTime(p.getSpeed()+p.getAttackTime());
+		p.setAttackDir(direction);
 	}
 
 	@Override
 	public GameObjectID throwFan(GameObjectID player)
 			throws BozorgExceptionBase {
 		Player p=(Player) objects.get(player.getNumber());
-		if(p.hp==0)
+		if(p.getHp()==0)
 			throw new BozorgExceptionBase();
-		if(p.fans==0)
+		if(p.getFans()==0)
 			throw new BozorgExceptionBase();
 		Fan f=new Fan(p.x,p.y,(Player)objects.get(player.getNumber()));
 		objects.add(f);
 		GameObjectID g=GameObjectID.create(f.getClass());
 		f.id=g;
 		objectsId.add(g);
-		p.fans--;
+		p.setFans(p.getFans()-1);
 		return g;
 	}
 
 	@Override
 	public void getGift(GameObjectID player) throws BozorgExceptionBase {
 		Player p=(Player) objects.get(player.getNumber());
-		if(p.hp==0)
+		if(p.getHp()==0)
 			throw new BozorgExceptionBase();
 		if(getMapCellType(p.x, p.y, player)!=BONUS_CELL)
 			throw new BozorgExceptionBase();
@@ -145,26 +151,26 @@ public class Judge extends JudgeAbstract {
 			if(x.x==p.x && x.y==p.y)
 				throw new BozorgExceptionBase();
 		}
-		int t=map.map[p.x][p.y].type;
+		int t=map.getMap()[p.x][p.y].getType();
 		if(t==JUMP_CELL){
-			p.jump+=2000;
+			p.setJump(p.getJump()+2000);
 		}
 		if(t==SPEEDUP_CELL){
-			p.speed+=5000;
+			p.setSpeed(p.getSpeed()+5000);
 		}
 		if(t==STONE_CELL){
-			p.stun+=3000;
+			p.setStun(p.getStun()+3000);
 		}
 		if(t==FAN_CELL){
-			p.fans+=3;
+			p.setFans(p.getFans()+3);
 		}
 		if(t==RADAR_CELL){
-			p.vision+=3000;
+			p.setVision(p.getVision()+3000);
 		}
 		if(t==HOSPITAL_CELL){
-			p.hp=Math.min(p.hp+20, 100);
+			p.setHp(Math.min(p.getHp()+20, 100));
 		}
-		map.map[p.x][p.y].type=0;
+		map.getMap()[p.x][p.y].setType(0);
 	}
 
 	@Override
@@ -183,12 +189,12 @@ public class Judge extends JudgeAbstract {
 			throws BozorgExceptionBase {
 		if(!player.getClass().equals(Player.class))
 			throw new BozorgExceptionBase();
-		if(((Player)(objects.get(player.getNumber()))).hp==0)
+		if(((Player)(objects.get(player.getNumber()))).getHp()==0)
 			throw new BozorgExceptionBase();
-		if(((Player)objects.get(player.getNumber())).vision>0){
+		if(((Player)objects.get(player.getNumber())).getVision()>0){
 			ArrayList<String>ret=new ArrayList<String>();
-			for(int i=0;i<map.width;i++)
-				for(int j=0;j<map.height;j++)
+			for(int i=0;i<map.getWidth();i++)
+				for(int j=0;j<map.getHeight();j++)
 					ret.add(i+","+j);
 			return ret;
 		}
@@ -199,8 +205,8 @@ public class Judge extends JudgeAbstract {
 				if(((Fan)o).owner.equals((Player)objects.get(player.getNumber())) && ((Fan)o).isAlive)
 					set.add(((Fan)o).x+","+((Fan)o).y);
 		}
-		for(int i=Math.max(0,p.x-p.vision);i<Math.min(map.width,p.x+p.vision+1);i++)
-			for(int j=Math.max(0,p.y-p.vision);j<Math.min(map.height,p.y+p.vision+1);j++)
+		for(int i=Math.max(0,p.x-p.getVision());i<Math.min(map.getWidth(),p.x+p.getVision()+1);i++)
+			for(int j=Math.max(0,p.y-p.getVision());j<Math.min(map.getHeight(),p.y+p.getVision()+1);j++)
 				set.add(i+","+j);
 		ArrayList<String>ret=new ArrayList<String>();
 		for(String s:set)
@@ -239,7 +245,7 @@ public class Judge extends JudgeAbstract {
 			Fan f=(Fan)objects.get(id.getNumber());
 			ret.put(JudgeAbstract.ROW, f.x);
 			ret.put(JudgeAbstract.COL, f.y);
-			ret.put(JudgeAbstract.OWNER, f.owner.name);
+			ret.put(JudgeAbstract.OWNER, f.owner.getName());
 			if(f.isAlive)
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.ALIVE);
 			else
@@ -249,22 +255,22 @@ public class Judge extends JudgeAbstract {
 			Player p=(Player)objects.get(id.getNumber());
 			ret.put(JudgeAbstract.ROW, p.x);
 			ret.put(JudgeAbstract.COL, p.y);
-			ret.put(JudgeAbstract.SPEED, p.speed);
-			ret.put(JudgeAbstract.NAME, p.name);
+			ret.put(JudgeAbstract.SPEED, p.getSpeed());
+			ret.put(JudgeAbstract.NAME, p.getName());
 			if(Judge.winner==4)
 				ret.put(JudgeAbstract.IS_WINNER,JudgeAbstract.NOT_FINISHED);
-			else if(Judge.winner==p.name)
+			else if(Judge.winner==p.getName())
 				ret.put(JudgeAbstract.IS_WINNER,JudgeAbstract.WINS);
 			else
 				ret.put(JudgeAbstract.IS_WINNER,JudgeAbstract.LOST);
-			ret.put(JudgeAbstract.POWER, p.power);
-			ret.put(JudgeAbstract.VISION, p.vision);
-			ret.put(JudgeAbstract.FANS,p.fans);
-			if(p.hp>0)
+			ret.put(JudgeAbstract.POWER, p.getPower());
+			ret.put(JudgeAbstract.VISION, p.getVision());
+			ret.put(JudgeAbstract.FANS,p.getFans());
+			if(p.getHp()>0)
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.ALIVE);
 			else
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.DEAD);
-			ret.put(JudgeAbstract.HEALTH,Math.max(p.hp,0));
+			ret.put(JudgeAbstract.HEALTH,Math.max(p.getHp(),0));
 		}
 		return ret;
 	}
@@ -279,9 +285,9 @@ public class Judge extends JudgeAbstract {
 		if(winner==4){
 			int tmp=0;
 			for(Player p:Judge.players){
-				if(map.map[p.x][p.y].type==JudgeAbstract.JJ_CELL){
+				if(map.getMap()[p.x][p.y].getType()==JudgeAbstract.JJ_CELL){
 					tmp++;
-					winner=p.name;
+					winner=p.getName();
 				}
 			}
 			if(tmp>1)
@@ -317,7 +323,7 @@ public class Judge extends JudgeAbstract {
 				f.y=infoValue;
 			if(infoKey.equals(JudgeAbstract.OWNER))
 				for(Player p:players)
-					if(p.name==infoValue)
+					if(p.getName()==infoValue)
 						f.owner=p;
 			if(infoKey.equals(JudgeAbstract.IS_ALIVE))
 				if(infoValue==JudgeAbstract.ALIVE)
@@ -333,18 +339,18 @@ public class Judge extends JudgeAbstract {
 				p.y=infoValue;
 			if(infoKey.equals(JudgeAbstract.IS_ALIVE))
 				if(infoValue==JudgeAbstract.ALIVE)
-					if(p.hp==0)
-						p.hp=100;
+					if(p.getHp()==0)
+						p.setHp(100);
 			if(infoKey.equals(JudgeAbstract.SPEED))
-				p.speed=infoValue;
+				p.setSpeed(infoValue);
 			if(infoKey.equals(JudgeAbstract.NAME))
-				p.name=infoValue;
+				p.setName(infoValue);
 			if(infoKey.equals(JudgeAbstract.POWER))
-				p.power=infoValue;
+				p.setPower(infoValue);
 			if(infoKey.equals(JudgeAbstract.VISION))
-				p.vision=infoValue;
+				p.setVision(infoValue);
 			if(infoKey.equals(JudgeAbstract.FANS))
-				p.fans=infoValue;
+				p.setFans(infoValue);
 		}
 	}
 

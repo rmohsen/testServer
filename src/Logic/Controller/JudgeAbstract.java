@@ -1,4 +1,7 @@
-package Logic;
+package Logic.Controller;
+
+import Logic.Common.exception.BozorgExceptionBase;
+import Logic.Common.GameObjectID;
 
 import java.util.ArrayList;
 import java.util.HashMap;

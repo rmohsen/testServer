@@ -1,4 +1,6 @@
-package Logic;
+package Logic.Model;
+
+import Logic.Common.GameObjectID;
 
 /**
  * Created by Lenovo on 7/10/2015.

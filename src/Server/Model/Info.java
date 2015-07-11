@@ -1,8 +1,8 @@
 package Server.Model;
 
-import Logic.Fan;
-import Logic.GameObjectID;
-import Logic.Player;
+import Logic.Model.Fan;
+import Logic.Common.GameObjectID;
+import Logic.Model.Player;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,8 @@ public class Info implements java.io.Serializable {
 
     Player player;
     Fan fan;
-
+    private ArrayList<GameObjectID> objectIDs ;
+    private boolean admin = true ;
 
     public Player getPlayer() {
         return player;
@@ -46,24 +47,15 @@ public class Info implements java.io.Serializable {
         this.objectIDs = objectIDs;
     }
 
-    private ArrayList<GameObjectID> objectIDs ;
-
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 
     // TODO : care about admin access
-    private boolean admin = true ;
 
-    public String getUserName() {
-        return userName;
+    public int getUserName() {
+        return player.id.getNumber();
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    private String userName;
 
     public boolean isRunning() {
         return running;

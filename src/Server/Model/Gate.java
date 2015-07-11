@@ -14,17 +14,15 @@ import java.util.Scanner;
  * Created by Lenovo on 7/8/2015.
  */
 public class Gate {
-    private ArrayList<Info> infos;
     private String comment;
     private String sendingDestination;
     private String receivingDestination;
     private String command;
 
-
     final String hostName = null;
-
-    Info selfData;
+    DataBase dataBase;
     Processor processor;
+
     int PRIMARY_PORT_NUMBER = 0;
     int MAIN_PORT_NUMBER = 0;
     int CHAT_SEND_PORT_NUMBER = 0;
@@ -34,12 +32,16 @@ public class Gate {
     int Data_RECEIVE_PORT_NUMBER = 0;
     int Multimedia_RECEIVE_PORT_NUMBER = 0;
 
-    public Info getSelfData() {
-        return selfData;
+    public DataBase getDataBase() {
+        return dataBase;
     }
 
-    public void setSelfData(Info selfData) {
-        this.selfData = selfData;
+    public void setDataBase(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
+
+    public Info getSelfData() {
+        return dataBase.getSelfData();
     }
 
     public String getCommand() {
@@ -55,11 +57,7 @@ public class Gate {
     }
 
     public ArrayList<Info> getInfos() {
-        return infos;
-    }
-
-    public void setInfos(ArrayList<Info> infos) {
-        this.infos = infos;
+        return dataBase.getStoredData();
     }
 
     public String getComment() {
@@ -144,7 +142,7 @@ public class Gate {
     public void SendData(String hostName, int dataSendPortNumber) {
         try {
             Data sendingData = new Data(new Socket(hostName, dataSendPortNumber), processor);
-            sendingData.getDataBase().setSelfData(selfData);
+            sendingData.getDataBase().setSelfData(getSelfData());
             Port sendingDataPort = new Port(sendingData);
             sendingDataPort.run();
         } catch (UnknownHostException e) {

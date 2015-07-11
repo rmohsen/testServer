@@ -1,8 +1,7 @@
 package Graphic;
 
-import Logic.BozorgExceptionBase;
-import Logic.Judge;
-import Logic.JudgeAbstract;
+import Logic.Controller.Judge;
+import Logic.Controller.JudgeAbstract;
 
 import javax.swing.*;
 
