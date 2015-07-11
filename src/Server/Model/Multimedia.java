@@ -37,7 +37,6 @@ public class Multimedia extends Transferable {
         BufferedOutputStream bufferedOutputStream = null;
 
         try {
-            System.out.println("Connecting...");
             // receive file
             byte[] ReceivedByteArray = new byte[FILE_SIZE];
 
@@ -57,8 +56,6 @@ public class Multimedia extends Transferable {
 
             bufferedOutputStream.write(ReceivedByteArray, 0, current);
             bufferedOutputStream.flush();
-            System.out.println("File " + FILE_TO_RECEIVED
-                    + " downloaded (" + current + " bytes read)");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

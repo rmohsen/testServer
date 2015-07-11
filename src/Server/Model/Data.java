@@ -1,7 +1,5 @@
 package Server.Model;
 
-import Logic.Info;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,18 +12,19 @@ import java.net.Socket;
 public class Data extends Transferable implements Serializable {
 
     // TODO: Match storedData with map info
-    Info StoredData = null;
+
+    DataBase dataBase;
+
+    public DataBase getDataBase() {
+        return dataBase;
+    }
+
+    public void setDataBase(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
 
     public Data(Socket socket, Processor processor) {
         super(socket, processor);
-    }
-
-    public Info getStoredData() {
-        return StoredData;
-    }
-
-    public void setStoredData(Info storedData) {
-        StoredData = storedData;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class Data extends Transferable implements Serializable {
         ObjectInputStream input = null;
         try {
             input = new ObjectInputStream(socket.getInputStream());
-            StoredData = (Info) input.readObject();
+            this.dataBase = (DataBase) input.readObject();
             input.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -52,7 +51,7 @@ public class Data extends Transferable implements Serializable {
         ObjectOutputStream output = null;
         try {
             output = new ObjectOutputStream(socket.getOutputStream());
-            output.writeObject(this);
+            output.writeObject(dataBase);
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();

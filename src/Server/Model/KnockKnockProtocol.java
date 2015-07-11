@@ -1,21 +1,20 @@
-package Server.Controller;
+package Server.Model;
 
-import Logic.Info;
-import Server.Model.Gate;
+import Server.Controller.KKMultiServer;
+import Server.Controller.KKMultiServerThread;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Lenovo on 7/5/2015.
+ * Created by Lenovo on 7/11/2015.
  */
 public class KnockKnockProtocol {
 
-    private int socketNumber = KKMultiServer.PRIMARY_PORT_NUMBER + 1;
+    private static int socketNumber = KKMultiServer.PRIMARY_PORT_NUMBER + 1;
 
     //TODO: care about different sockets requests
 
-    public int[] processInput(String inputLine,String type,KKMultiServerThread serverThread) {
+    public int[] processInput(String inputLine,String type, KKMultiServerThread serverThread) {
         switch (type) {
             case "PRIMARY":
                 int[] portNumber = new int[7];
@@ -31,20 +30,21 @@ public class KnockKnockProtocol {
                 break;
             case "MAIN":
                 Gate gate = serverThread.getGate();
-                KKMultiServer server = (KKMultiServer)serverThread.getGate().getProcessor();
+                Processor processor = serverThread.getGate().getProcessor();
+                KKMultiServer server = (KKMultiServer)processor;
                 String password = server.getPassword();
                 if (inputLine.equals("PAUSE")){
-                    ArrayList<Info> infos = server.getDataArray();
-                    Info lastInfo = infos.get(infos.size()-1);
-                    lastInfo.setRunning(false);
-                    gate.setInfo(lastInfo);
+                    processor.getDataBase().setRunning(false);
                 }
                 if (inputLine.contains(password+" KICK")){
                     inputLine = inputLine.substring(password.length()+5);
                     HashMap hashMap = server.getThreadHashMap();
-                    if (hashMap.containsKey(inputLine) && gate.getInfo().isAdmin()){
+                    if (hashMap.containsKey(inputLine) && gate.getSelfData().isAdmin()){
                         hashMap.remove(inputLine);
                     }
+                }
+                if (inputLine.contains("GET ")){
+                    inputLine = inputLine.substring(4);
                 }
                 gate.setSendingDestination(inputLine);
                 gate.SendMultimedia(gate.getHostName(), gate.getMultimedia_SEND_PORT_NUMBER());
@@ -55,3 +55,4 @@ public class KnockKnockProtocol {
         return null;
     }
 }
+

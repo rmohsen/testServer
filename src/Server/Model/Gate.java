@@ -1,13 +1,12 @@
 package Server.Model;
 
-import Logic.Info;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -15,11 +14,33 @@ import java.util.Scanner;
  * Created by Lenovo on 7/8/2015.
  */
 public class Gate {
-    private Info info;
+    private ArrayList<Info> infos;
     private String comment;
     private String sendingDestination;
     private String receivingDestination;
     private String command;
+
+
+    final String hostName = null;
+
+    Info selfData;
+    Processor processor;
+    int PRIMARY_PORT_NUMBER = 0;
+    int MAIN_PORT_NUMBER = 0;
+    int CHAT_SEND_PORT_NUMBER = 0;
+    int Data_SEND_PORT_NUMBER = 0;
+    int Multimedia_SEND_PORT_NUMBER = 0;
+    int CHAT_RECEIVE_PORT_NUMBER = 0;
+    int Data_RECEIVE_PORT_NUMBER = 0;
+    int Multimedia_RECEIVE_PORT_NUMBER = 0;
+
+    public Info getSelfData() {
+        return selfData;
+    }
+
+    public void setSelfData(Info selfData) {
+        this.selfData = selfData;
+    }
 
     public String getCommand() {
         return command;
@@ -33,25 +54,12 @@ public class Gate {
         return hostName;
     }
 
-    final String hostName = null;
-
-    Processor processor;
-    int PRIMARY_PORT_NUMBER = 0;
-    int MAIN_PORT_NUMBER = 0;
-    int CHAT_SEND_PORT_NUMBER = 0;
-    int Data_SEND_PORT_NUMBER = 0;
-    int Multimedia_SEND_PORT_NUMBER = 0;
-    int CHAT_RECEIVE_PORT_NUMBER = 0;
-    int Data_RECEIVE_PORT_NUMBER = 0;
-    int Multimedia_RECEIVE_PORT_NUMBER = 0;
-
-
-    public Info getInfo() {
-        return info;
+    public ArrayList<Info> getInfos() {
+        return infos;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
+    public void setInfos(ArrayList<Info> infos) {
+        this.infos = infos;
     }
 
     public String getComment() {
@@ -80,7 +88,7 @@ public class Gate {
 
     private void sendingRequest(PrintWriter out) {
         Formatter formatter = new Formatter(out);
-        formatter.format("knock knock");
+        formatter.format("Knock Knock");
         formatter.flush();
     }
 
@@ -136,7 +144,7 @@ public class Gate {
     public void SendData(String hostName, int dataSendPortNumber) {
         try {
             Data sendingData = new Data(new Socket(hostName, dataSendPortNumber), processor);
-            sendingData.setStoredData(info);
+            sendingData.getDataBase().setSelfData(selfData);
             Port sendingDataPort = new Port(sendingData);
             sendingDataPort.run();
         } catch (UnknownHostException e) {

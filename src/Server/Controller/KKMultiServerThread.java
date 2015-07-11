@@ -2,6 +2,7 @@ package Server.Controller;
 
 import Server.Model.Gate;
 import Server.Model.Processor;
+import Server.Model.KnockKnockProtocol;
 
 import java.io.*;
 import java.net.Socket;
@@ -38,10 +39,9 @@ public class KKMultiServerThread extends Thread {
             outputLines = kkp.processInput(inputLine,"PRIMARY",this);
             gate.initializePortsNumber(outputLines);
             gate.openAllGates();
-            processor.getUserArray().add(gate.getInfo().getUserName());
+            processor.getUserArray().add(gate.getSelfData().getUserName());
 
             if (inputLine != null) {
-
                 for (int i = 0; i < 7; i++) {
                     // TODO: appropriate out
                     out.println(outputLines[i]);

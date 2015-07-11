@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.Model.Processor;
-import Logic.Info;
+import Server.Model.Info;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,8 +10,14 @@ import java.util.HashMap;
 
 public class KKMultiServer extends Processor {
 
-    final static int PRIMARY_PORT_NUMBER = 8000;
+    public final static int PRIMARY_PORT_NUMBER = 8000;
+
     static ArrayList<Integer> portArray = new ArrayList<Integer>(PRIMARY_PORT_NUMBER);
+    protected ArrayList<Info> dataArray = new ArrayList<>();
+    private ArrayList<KKMultiServerThread> threads = new ArrayList<>();
+    private HashMap<String, KKMultiServerThread> threadHashMap = new HashMap<>();
+    String password = "1234";
+
     public ArrayList<Info> getDataArray() {
         return dataArray;
     }
@@ -19,10 +25,6 @@ public class KKMultiServer extends Processor {
     public void setDataArray(ArrayList<Info> dataArray) {
         this.dataArray = dataArray;
     }
-
-    protected ArrayList<Info> dataArray = new ArrayList<>();
-
-    private ArrayList<KKMultiServerThread> threads = new ArrayList<>();
 
     public HashMap<String, KKMultiServerThread> getThreadHashMap() {
         return threadHashMap;
@@ -32,27 +34,27 @@ public class KKMultiServer extends Processor {
         this.threadHashMap = threadHashMap;
     }
 
-    private HashMap<String,KKMultiServerThread> threadHashMap = new HashMap<>();
-
     public String getPassword() {
         return password;
     }
 
-    String password = "1234";
-
     @Override
     public void run() {
-        boolean listening = true;
-        while (listening) {
-            int portNumber = PRIMARY_PORT_NUMBER;
-            try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
-                KKMultiServerThread thread = new KKMultiServerThread(serverSocket.accept(),this);
-                thread.start();
-                threadHashMap.put(thread.getGate().getInfo().getUserName(), thread);
-            } catch (IOException e) {
-                System.err.println("Could not listen on port " + portNumber);
-                System.exit(-1);
-            }
+        int portNumber = PRIMARY_PORT_NUMBER;
+        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+            KKMultiServerThread thread = new KKMultiServerThread(serverSocket.accept(), this);
+            thread.start();
+            Info info = thread.getGate().getSelfData();
+            threadHashMap.put(info.getUserName(), thread);
+            processInfo();
+        } catch (IOException e) {
+
+        }
+    }
+
+    private void processInfo() {
+        for (Info info : dataArray) {
+
         }
     }
 }
