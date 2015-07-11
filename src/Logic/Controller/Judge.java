@@ -105,7 +105,7 @@ public class Judge extends JudgeAbstract {
 			throw new BozorgExceptionBase();
 		if(p.getMoveTime()>0)
 			throw new BozorgExceptionBase();
-		p.setMoveTime(p.getSpeed()+p.getMoveTime());
+		p.setMoveTime(p.getSpeed() + p.getMoveTime());
 		p.setMoveDir(direction);
 	}
 
@@ -120,7 +120,7 @@ public class Judge extends JudgeAbstract {
 			throw new BozorgExceptionBase();
 		if((w>>direction)%2==1)
 			throw new BozorgExceptionBase();
-		if(p.getAttackTime()>0)
+		if(p.getAttackTime()<0)
 			throw new BozorgExceptionBase();
 		p.setAttackTime(p.getSpeed()+p.getAttackTime());
 		p.setAttackDir(direction);
@@ -173,7 +173,7 @@ public class Judge extends JudgeAbstract {
 			p.setVision(p.getVision()+3000);
 		}
 		if(t==HOSPITAL_CELL){
-			p.setHp(Math.min(p.getHp()+20, 100));
+			p.setHp(Math.min(p.getHp() + 20, 100));
 		}
 		map.getMap()[p.x][p.y].setType(0);
 	}
@@ -301,8 +301,8 @@ public class Judge extends JudgeAbstract {
 	@Override
 	public ArrayList<String> getVision(GameObjectID player)
 			throws BozorgExceptionBase {
-		if(!player.getClass().equals(Player.class))
-			throw new BozorgExceptionBase();
+//		if(!player.getClass().equals(Player.class))
+//			throw new BozorgExceptionBase();
 		if(((Player)(objects.get(player.getNumber()))).getHp()==0)
 			throw new BozorgExceptionBase();
 		if(((Player)objects.get(player.getNumber())).getVision()>0){
@@ -364,10 +364,15 @@ public class Judge extends JudgeAbstract {
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.ALIVE);
 			else
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.DEAD);
+			System.out.println("*****fan******");
+//			System.out.println(objects.get(id.getNumber()).getClass().equals(Fan.class));
 		}
+
 		if(objects.get(id.getNumber()).getClass().equals(Player.class)){
+			System.out.println(objects.get(id.getNumber()).getClass().equals(Player.class));
 			Player p=(Player)objects.get(id.getNumber());
 			ret.put(JudgeAbstract.ROW, p.x);
+			System.out.println("*****Player******"+p.x+"  "+p.y+"  "+p.getName());
 			ret.put(JudgeAbstract.COL, p.y);
 			ret.put(JudgeAbstract.SPEED, p.getSpeed());
 			ret.put(JudgeAbstract.NAME, p.getName());
@@ -384,7 +389,7 @@ public class Judge extends JudgeAbstract {
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.ALIVE);
 			else
 				ret.put(JudgeAbstract.IS_ALIVE, JudgeAbstract.DEAD);
-			ret.put(JudgeAbstract.HEALTH,Math.max(p.getHp(),0));
+			ret.put(JudgeAbstract.HEALTH,(int)Math.max(p.getHp(),0));
 		}
 		return ret;
 	}
