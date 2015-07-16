@@ -57,6 +57,19 @@ public class SetPlayersPanel extends JPanel {
 					players[i] = tmp.get(i);
 				Judge judge = new Judge();
 				judge.loadMap(cellsType, wallsType, players);
+				Thread t = new Thread() {
+				    @Override
+				    public void run() {
+				        while(true) {
+				            try {
+				                Thread.sleep(50);
+				                judge.next50milis();
+				            } catch (InterruptedException ie) {
+				            }
+				        }
+				    }
+				};
+				t.start();
 				enable = false;
 				MyFrame.frame.setContentPane(new GamePanel(judge
 						.getEveryThing().get(0), judge, false));

@@ -24,6 +24,7 @@ public class GamePanel extends JPanel {
 	private JButton throwFanBtn;
 	private JButton getGiftBtn;
 	private String[] playersName = { "Saman", "Jafar", "Reza", "Hasin" };
+	int timefucos = 0;
 
 	public GamePanel(GameObjectID curPlayer, Judge judge, boolean isNetwork) {
 		this.curPlayer = curPlayer;
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel {
 		addAttackBtn();
 		addKeyListener(new GameKeyListener(curPlayer, allPlayers, judge));
 		setFocusable(true);
+		requestFocusInWindow();
 
 		Thread updateThread = new Thread() {
 			@Override
@@ -73,11 +75,17 @@ public class GamePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		timefucos++;
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		for (int i = 0; i < MyFrame.ROW; i++)
 			for (int j = 0; j < MyFrame.COLUMN; j++)
 				cells[i][j].paint(g);
+		if (timefucos % 10 == 0) {
+			timefucos = 0;
+			setFocusable(true);
+			requestFocusInWindow();
+		}
 	}
 
 	public void update() {
@@ -113,7 +121,7 @@ public class GamePanel extends JPanel {
 				}
 			}
 		updateCells(false);
-		
+
 	}
 
 	private void addThrowFanBtn() {
@@ -165,6 +173,14 @@ public class GamePanel extends JPanel {
 	}
 
 	private void updateCells(boolean withCombo) {
+		int row = this.judge.getMapHeight();
+		int col = this.judge.getMapWidth();
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < col; j++) {
+				cells[i][j].players.clear();
+				cells[i][j].fans.clear();
+
+			}
 		for (GameObjectID gameObject : this.judge.getEveryThing()) {
 			try {
 				if (this.judge.getInfo(gameObject).get(JudgeAbstract.IS_ALIVE)
