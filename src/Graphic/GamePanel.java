@@ -79,8 +79,9 @@ public class GamePanel extends JPanel {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		for (int i = 0; i < MyFrame.ROW; i++)
-			for (int j = 0; j < MyFrame.COLUMN; j++)
+			for (int j = 0; j < MyFrame.COLUMN; j++) {
 				cells[i][j].paint(g);
+			}
 		if (timefucos % 10 == 0) {
 			timefucos = 0;
 			setFocusable(true);
@@ -173,6 +174,7 @@ public class GamePanel extends JPanel {
 	}
 
 	private void updateCells(boolean withCombo) {
+
 		int row = this.judge.getMapHeight();
 		int col = this.judge.getMapWidth();
 		for (int i = 0; i < row; i++)
@@ -194,7 +196,7 @@ public class GamePanel extends JPanel {
 							JudgeAbstract.HASIN };
 					for (int i = 0; i < 4; i++) {
 						if (this.judge.getInfo(gameObject).get(
-								JudgeAbstract.NAME) != null)
+								JudgeAbstract.NAME) != null) {
 							if (this.judge.getInfo(gameObject)
 									.get(JudgeAbstract.NAME)
 									.equals(existPlayers[i])) {
@@ -206,16 +208,16 @@ public class GamePanel extends JPanel {
 								cells[gbrow][gbcol].players.clear();
 								cells[gbrow][gbcol].players
 										.add(existPlayers[i]);
-							} else if (this.judge.getInfo(gameObject).get(
-									JudgeAbstract.OWNER) != null) {
-								if (this.judge.getInfo(gameObject)
-										.get(JudgeAbstract.OWNER)
-										.equals(existPlayers[i])) {
-									cells[gbrow][gbcol].fans.clear();
-									cells[gbrow][gbcol].fans
-											.add(existPlayers[i]);
-								}
 							}
+						} else if (this.judge.getInfo(gameObject).get(
+								JudgeAbstract.OWNER) != null) {
+							if (this.judge.getInfo(gameObject)
+									.get(JudgeAbstract.OWNER)
+									.equals(existPlayers[i])) {
+								cells[gbrow][gbcol].fans.clear();
+								cells[gbrow][gbcol].fans.add(existPlayers[i]);
+							}
+						}
 					}
 				}
 			} catch (BozorgExceptionBase e) {

@@ -29,9 +29,8 @@ public class Cell implements Painable {
 
 	@Override
 	public void paint(Graphics g) {
-//		if (type != 0) {
-//			System.out.println(X + " , " + +Y + " = " + type);
-//		}
+		PlayersArray.clear();
+		fansArray.clear();
 		g.setColor(colors[type]);
 		g.fillRect(X + BORDER, Y + BORDER, WIDTH - 2 * BORDER, HEIGHT - 2
 				* BORDER);
@@ -39,20 +38,21 @@ public class Cell implements Painable {
 		paintRight(g, MyFrame.calc(wallType, 2));
 		paintDown(g, MyFrame.calc(wallType, 3));
 		paintLeft(g, MyFrame.calc(wallType, 4));
-		if (players.size() > 0) {
+		if (players.size() + fans.size() > 0) {
 			int num = (int) Math.ceil(Math.sqrt(players.size() + fans.size()));
 			int width = WIDTH / num;
 			int height = HEIGHT / num;
-			int x = X;
-			int y = Y;
+			int x = 0;
+			int y = 0;
 			for (int player : players) {
-				PlayersArray.add(new Player(x, y, width, height, player));
+				PlayersArray
+						.add(new Player(X + x, Y + y, width, height, player));
 				x += width;
 				y += (x / WIDTH);
 				x %= WIDTH;
 			}
 			for (int fan : fans) {
-				fansArray.add(new Fan(x, y, width, height, fan));
+				fansArray.add(new Fan(X + x, Y + y, width, height, fan));
 				x += width;
 				y += (x / WIDTH);
 				x %= WIDTH;
